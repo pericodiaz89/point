@@ -1,8 +1,13 @@
+$(function(){
 
-Project.get(0, 5, "");
+  init();
+  
+});
 
-function getFinished(data) {
-    console.log(data);
+function init(){
+     $("#signIn").on("click", function(){
+        console.log("Entra");
+    });
 }
 
 
