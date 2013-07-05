@@ -54,10 +54,10 @@
 		 $name = $mysql->checkVariable($Project->getName());
 		 return $mysql->update(
 				"UPDATE `project` SET`name`='$name' WHERE `id` = '$id' " 
-		 );
+		);
 	}
 
-	 public static function delete($Project){
+	public static function delete($Project){
 		$mysql = MysqlDBC::getInstance();
 		
 		 $id = $mysql->checkVariable($Project->getId());
@@ -66,41 +66,44 @@
 		);
 	}
 
-	 public static function getList($page, $count, $filters) {
-		 // <editor-fold defaultstate="collapsed" desc="Limit">
-		 $limit = "";
-		 if ($count > 0 && $page >= 0) {
-			 $lowerLimit = $page * $count;
-			 $limit = " LIMIT $lowerLimit, $count";
+	public static function getList($page, $count, $filters) {
+		// <editor-fold defaultstate="collapsed" desc="Limit">
+		$limit = "";
+		if ($count > 0 && $page >= 0) {
+			$lowerLimit = $page * $count;
+			$limit = " LIMIT $lowerLimit, $count";
 		}
 		// </editor-fold>
 		// <editor-fold defaultstate="collapsed" desc="Where">
 		$where = "";
-		if (is_array($filters) && count($filters) > 0) {
-			$where = " WHERE ";
-			$keys = array_keys($filters);
-			for ($i = 0; $i < count($keys); $i++) {
-				$where .= "project." . $keys[$i] . " = " . $filters[$keys[$i]];
-				if ($i < count($keys) - 1) {
-					 $where .= " AND ";
-				 }
-			 }
-		 }
-		 $result = MysqlDBC::getInstance()->getResult("SELECT * FROM `project` $where $limit");
-		  $list = array();
-		 while ($row = $result->fetch_object()) {
-			 $Entity = Project::get($row);
-			 array_push($list, $Entity);
-		 }
-		 return $list;
+		if (is_object($filters)) {
+			$filters = get_object_vars($filters);
+			if (is_array($filters) && count($filters) > 0) {
+				$where = " WHERE ";
+				$keys = array_keys($filters);
+				for ($i = 0; $i < count($keys); $i++) {
+					$where .= "project." . $keys[$i] . " = '" . $filters[$keys[$i]] . "'";
+					if ($i < count($keys) - 1) {
+						$where .= " AND ";
+					}
+				}
+			}
+		}
+		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `project` $where $limit");
+		$list = array();
+		while ($row = $result->fetch_object()) {
+			$Entity = Project::get($row);
+			array_push($list, $Entity);
+		}
+		return $list;
 	 }
 
-	  // </editor-fold>
+	// </editor-fold>
 
-	 public function toArray() {
-		 return array(
-			'id' => $this->getId,
-			'name' => $this->getName
+	public function toArray() {
+		return array(
+			'id' => $this->getId(),
+			'name' => $this->getName()
 		 );
 	}
 }

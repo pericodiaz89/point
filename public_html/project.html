@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>Point Application</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="Digital Emerald Entertainment">
+
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/point.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="brand" href="home.html">Point Application</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                        </ul>
+                        <form class="navbar-form pull-right">
+                            <p class="navbar-text">UserName</p>
+                        </form>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="jumbotron">
+                <h1 class="text-center">Project Name</h1>
+                <form class="form-inline">
+                    <div class="control-group text-center">
+                        <h3 class="control-label ">Current Sprint</h3>
+                        <select class="controls cbSprints">
+                            <option>Sprint de caminar</option>
+                            <option>Sprint de enemigo</option>
+                            <option>Sprint de pelea</option>
+                        </select>
+                        <button class="btn btn-small btn-success" id="bCreateSprint">New Sprint</button>
+                    </div>
+                </form>
+                <form class="form-horizontal text-center">
+                    <div class="control-group">
+                        <label class="label">Department</label>
+                        <select>
+                            <option>All</option>
+                            <option>Programming</option>
+                            <option>Art</option>
+                            <option>Administration</option>
+                            <option>Game Design</option>
+                        </select>
+                        <label class="label">Status</label>
+                        <select >
+                            <option>New</option>
+                            <option>Assigned</option>
+                            <option>Testing</option>
+                            <option>Closed</option>
+                            <option>Invalid</option>
+                        </select>
+                        <label class="label">User</label>
+                        <select >
+                            <option>rdiazbe (Rodrigo Diaz Bermudez)</option>
+                            <option>mateoc</option>
+                        </select>
+                        <label class="label">Component</label>
+                        <select>
+                            <option>Bugs</option>
+                            <option>Buildings</option>
+                        </select>
+                    </div>
+                </form>
+                <h3 class="text-center">Task List</h3>
+                <table class="table row-fluid table-hover table-bordered success">
+                    <tr>
+                        <th>&#x2713;</th>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Points</th>
+                        <th>User</th>
+                        <th>Department</th>
+                        <th>Component</th>
+                        <th>Status</th>
+                    </tr>
+
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>1</td>
+                        <td>Bug Invaders</td>
+                        <td>2</td>
+                        <td>rdiazbe</td>
+                        <td>Programming</td>
+                        <td>N/A</td>
+                        <td>New</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>2</td>
+                        <td>Planet Defense</td>
+                        <td>3</td>
+                        <td>rdiazbe</td>
+                        <td>Programming</td>
+                        <td>N/A</td>
+                        <td>New</td>
+                    </tr>
+                </table>
+                <p><button class="btn-success row-fluid ">Create New Task</button></p>
+                <form  class="form-horizontal">
+                    <label class="control-label margin-right-5">To Selected Tasks: </label>
+                    <select>
+                        <option>Sprint de caminar</option>
+                        <option>Sprint de enemigo</option>
+                        <option>Sprint de pelea</option>
+                    </select>
+                    <button class="btn-danger">Send to Sprint</button>
+                </form>
+
+            </div>
+
+
+
+            <hr>
+
+            <footer>
+                <p>Emerald Digital Entertainment 2013 ©</p>
+            </footer>
+
+        </div> <!-- /container -->
+
+        <div id="task_panel" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Modal header</h3>
+            </div>
+            <div class="modal-body">
+                <p>One fine body…</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn">Close</a>
+                <a href="#" class="btn btn-primary">Save changes</a>
+            </div>
+        </div>
+
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.js"></script>
+    </body>
+</html>

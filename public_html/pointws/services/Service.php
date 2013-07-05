@@ -1,7 +1,7 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
-header('Content-type: text/html; charset=utf-8');
+header('Content-type: text/javascript; charset=utf-8');
 date_default_timezone_set('America/Bogota');
 
 define('command', 'command');

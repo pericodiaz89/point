@@ -54,10 +54,10 @@
 		 $id = $mysql->checkVariable($Department->getId());
 		 return $mysql->update(
 				"UPDATE `department` SET`name`='$name' WHERE `id` = '$id' " 
-		 );
+		);
 	}
 
-	 public static function delete($Department){
+	public static function delete($Department){
 		$mysql = MysqlDBC::getInstance();
 		
 		 $name = $mysql->checkVariable($Department->getName());
@@ -66,41 +66,44 @@
 		);
 	}
 
-	 public static function getList($page, $count, $filters) {
-		 // <editor-fold defaultstate="collapsed" desc="Limit">
-		 $limit = "";
-		 if ($count > 0 && $page >= 0) {
-			 $lowerLimit = $page * $count;
-			 $limit = " LIMIT $lowerLimit, $count";
+	public static function getList($page, $count, $filters) {
+		// <editor-fold defaultstate="collapsed" desc="Limit">
+		$limit = "";
+		if ($count > 0 && $page >= 0) {
+			$lowerLimit = $page * $count;
+			$limit = " LIMIT $lowerLimit, $count";
 		}
 		// </editor-fold>
 		// <editor-fold defaultstate="collapsed" desc="Where">
 		$where = "";
-		if (is_array($filters) && count($filters) > 0) {
-			$where = " WHERE ";
-			$keys = array_keys($filters);
-			for ($i = 0; $i < count($keys); $i++) {
-				$where .= "department." . $keys[$i] . " = " . $filters[$keys[$i]];
-				if ($i < count($keys) - 1) {
-					 $where .= " AND ";
-				 }
-			 }
-		 }
-		 $result = MysqlDBC::getInstance()->getResult("SELECT * FROM `department` $where $limit");
-		  $list = array();
-		 while ($row = $result->fetch_object()) {
-			 $Entity = Department::get($row);
-			 array_push($list, $Entity);
-		 }
-		 return $list;
+		if (is_object($filters)) {
+			$filters = get_object_vars($filters);
+			if (is_array($filters) && count($filters) > 0) {
+				$where = " WHERE ";
+				$keys = array_keys($filters);
+				for ($i = 0; $i < count($keys); $i++) {
+					$where .= "department." . $keys[$i] . " = '" . $filters[$keys[$i]] . "'";
+					if ($i < count($keys) - 1) {
+						$where .= " AND ";
+					}
+				}
+			}
+		}
+		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `department` $where $limit");
+		$list = array();
+		while ($row = $result->fetch_object()) {
+			$Entity = Department::get($row);
+			array_push($list, $Entity);
+		}
+		return $list;
 	 }
 
-	  // </editor-fold>
+	// </editor-fold>
 
-	 public function toArray() {
-		 return array(
-			'name' => $this->getName,
-			'id' => $this->getId
+	public function toArray() {
+		return array(
+			'name' => $this->getName(),
+			'id' => $this->getId()
 		 );
 	}
 }

@@ -1,0 +1,25 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+/*
+.table  tbody th {
+    background-color: #6699ff;
+}*/
+
+.cbSprints{
+    width: 50%;
+}
+
+form select{
+    margin-right: 5px;
+}
+
+.margin-right-5{
+    margin-right: 5px;
+}
+
+.table-select{
+    margin: 0px 0px 0px 0px;
+    width: 100%;
+}
