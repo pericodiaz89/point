@@ -9,6 +9,7 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap-responsive.css" rel="stylesheet">
         <link href="css/point.css" rel="stylesheet">
+
     </head>
 
     <body>
@@ -123,9 +124,6 @@
                 </form>
 
             </div>
-
-
-
             <hr>
 
             <footer>
@@ -134,17 +132,152 @@
 
         </div> <!-- /container -->
 
+        <div id="new_task_panel" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>New Task</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-inline">
+                    <input type="text" class="input-xlarge row-fluid" placeholder="Task Name">
+                    <label>Description</label>
+                    <textarea class="row-fluid" rows="3"></textarea>
+                    <label class="inline">Points</label>
+                    <label class="radio inline">
+                        <input type="radio" name="optionsRadios" id="rbOptionNewTask1" value="1" checked>
+                        <span class="badge badge-success">1</span>
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="optionsRadios" id="rbOptionNewTask2" value="2">
+                        <span class="badge badge-warning">2</span>
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" name="optionsRadios" id="rbOptionNewTask3" value="3">
+                        <span class="badge badge-important">3</span>
+                    </label>
+
+                    <table class="row-fluid">
+                        <tr>
+                            <td><label class="label">Department</label>
+                                <select class="modal-select">
+                                    <option>All</option>
+                                    <option>Programming</option>
+                                    <option>Art</option>
+                                    <option>Administration</option>
+                                    <option>Game Design</option>
+                                </select></td>
+                                <td><label class="label">Status</label>
+                                    <select class="modal-select">
+                                        <option>New</option>
+                                        <option>Assigned</option>
+                                        <option>Testing</option>
+                                        <option>Closed</option>
+                                        <option>Invalid</option>
+                                    </select>
+                                </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label class="label">User</label>
+                                <select class="modal-select">
+                                    <option>rdiazbe</option>
+                                    <option>mateoc</option>
+                                </select>
+                            </td>
+                            <td><label class="label">Component</label>
+                                <select class="modal-select">
+                                    <option>Bugs</option>
+                                    <option>Buildings</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-danger">Cancel</a>
+                <a href="#" class="btn btn-primary">Create Task</a>
+            </div>
+        </div>
+
         <div id="task_panel" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3>Modal header</h3>
+                <h4 class="text-center">#1 Description of the task at hand since its a long story</h4>
+                <div class="well well-small">Description of the task</div>
+                <label class="label">Department</label> Game Design <label class="label">Component</label> Bugs
+                <i class="icon-pencil pull-right"></i>
             </div>
             <div class="modal-body">
-                <p>One fine body…</p>
+                <div class="form-inline">
+                    <div class="text-center">
+                        <label class=""><b>Points</b></label>
+                        <label class="radio inline">
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <span class="badge badge-success">1</span>
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                            <span class="badge badge-warning">2</span>
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                            <span class="badge badge-important">3</span>
+                        </label>
+                    </div>
+                    <table class="row-fluid">
+                        <tr>
+                            <td>
+                                <label class="label">User</label>
+                                <select class="modal-select">
+                                    <option>rdiazbe</option>
+                                    <option>mateoc</option>
+                                </select>
+                            </td>
+                            <td><label class="label">Status</label>
+                                <select class="modal-select">
+                                    <option>New</option>
+                                    <option>Assigned</option>
+                                    <option>Testing</option>
+                                    <option>Closed</option>
+                                    <option>Invalid</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <a href="#" class="btn btn-success pull-right">Update Task</a>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn">Close</a>
-                <a href="#" class="btn btn-primary">Save changes</a>
+                <h4 class="text-center">Comments</h4>
+                <div class="text-left">
+                    <b>2013-07-01 14:01:05 rdiazbe</b>
+                    Creo que esta aplicacion puede ser muy interesante ya que muestra muchas cosas.
+                </div>
+                <hr>
+                <div class="text-center ">
+                    <input type="text" placeholder="New Comment" class="comment">
+                    <a class="btn btn-inverse" href="#">Comment</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="new_sprint_panel" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="text-center">New Sprint</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-inline">
+                    <input type="text" class="width70" placeholder="Sprint Name">
+                    <label>Due:</label><input type="date">
+                    <label>Description</label>
+                    <textarea class="row-fluid" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-danger">Cancel</a>
+                <a href="#" class="btn btn-primary">Create Sprint</a>
             </div>
         </div>
 

@@ -24,6 +24,23 @@ form select{
     width: 100%;
 }
 
+.width90{
+    width: 90%;
+}
+
+.width70{
+    width: 50%;
+}
+
+.comment{
+    width: 70%;
+    margin-top: 10px;
+}
+
+.modal-select{
+    width: 100%
+}
+
 body {
     padding-top: 40px;
     padding-bottom: 40px;
