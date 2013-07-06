@@ -37,7 +37,7 @@
             <!-- Example row of columns -->
             <div class="jumbotron">
                 <h1 class="text-center">Project Name</h1>
-                <form class="form-inline">
+                <div class="form-inline">
                     <div class="control-group text-center">
                         <h3 class="control-label ">Current Sprint</h3>
                         <select class="controls cbSprints">
@@ -45,9 +45,9 @@
                             <option>Sprint de enemigo</option>
                             <option>Sprint de pelea</option>
                         </select>
-                        <button class="btn btn-small btn-success" id="bCreateSprint">New Sprint</button>
+                        <button id="bCreateSprint" class="btn btn-small btn-success" >New Sprint</button>
                     </div>
-                </form>
+                </div>
                 <form class="form-horizontal text-center">
                     <div class="control-group">
                         <label class="label">Department</label>
@@ -112,8 +112,8 @@
                         <td>New</td>
                     </tr>
                 </table>
-                <p><button class="btn-success row-fluid ">Create New Task</button></p>
-                <form  class="form-horizontal">
+                <p><button id="bCreateTask" class="btn-success row-fluid ">Create New Task</button></p>
+                <div  class="form-horizontal">
                     <label class="control-label margin-right-5">To Selected Tasks: </label>
                     <select>
                         <option>Sprint de caminar</option>
@@ -121,7 +121,7 @@
                         <option>Sprint de pelea</option>
                     </select>
                     <button class="btn-danger">Send to Sprint</button>
-                </form>
+                </div>
 
             </div>
             <hr>

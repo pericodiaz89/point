@@ -2,24 +2,24 @@
  class User {
 
 	 private $email;
-	 private $username;
-	 private $id;
 	 private $name;
+	 private $id;
 	 private $password;
+	 private $username;
 
- function __construct($email, $username, $id, $name, $password){
+ function __construct($email, $name, $id, $password, $username){
 		 $this->email=$email;
-		 $this->username=$username;
-		 $this->id=$id;
 		 $this->name=$name;
+		 $this->id=$id;
 		 $this->password=$password;
+		 $this->username=$username;
 	}
  
 	public static function get($object){
 		if(property_exists($object, "User")){
 			$object = $object->User;
 		}
-		return new User ($object->email, $object->username, $object->id, $object->name, $object->password);
+		return new User ($object->email, $object->name, $object->id, $object->password, $object->username);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
@@ -32,12 +32,12 @@
 		$this->email = $email;
 	}
 
-	 public function getUsername() {
-		 return $this->username;
+	 public function getName() {
+		 return $this->name;
 	 }
 
-	 public function setUsername($username){
-		$this->username = $username;
+	 public function setName($name){
+		$this->name = $name;
 	}
 
 	 public function getId() {
@@ -48,20 +48,20 @@
 		$this->id = $id;
 	}
 
-	 public function getName() {
-		 return $this->name;
-	 }
-
-	 public function setName($name){
-		$this->name = $name;
-	}
-
 	 public function getPassword() {
 		 return $this->password;
 	 }
 
 	 public function setPassword($password){
 		$this->password = $password;
+	}
+
+	 public function getUsername() {
+		 return $this->username;
+	 }
+
+	 public function setUsername($username){
+		$this->username = $username;
 	}
 	// </editor-fold>
 
@@ -71,12 +71,12 @@
 		$mysql = MysqlDBC::getInstance();
 		
 		 $email = $mysql->checkVariable($User->getEmail());
-		 $username = $mysql->checkVariable($User->getUsername());
-		 $id = $mysql->checkVariable($User->getId());
 		 $name = $mysql->checkVariable($User->getName());
+		 $id = $mysql->checkVariable($User->getId());
 		 $password = $mysql->checkVariable($User->getPassword());
+		 $username = $mysql->checkVariable($User->getUsername());
 		return $mysql->insert(
-				 " INSERT INTO `user` (`email`,`username`,`id`,`name`,`password`) VALUES ('$email','$username','$id','$name','$password')"
+				 " INSERT INTO `user` (`email`,`name`,`id`,`password`,`username`) VALUES ('$email','$name','$id','$password','$username')"
 		);
 	}
 
@@ -84,12 +84,12 @@
 		$mysql = MysqlDBC::getInstance();
 		
 		 $email = $mysql->checkVariable($User->getEmail());
-		 $username = $mysql->checkVariable($User->getUsername());
-		 $id = $mysql->checkVariable($User->getId());
 		 $name = $mysql->checkVariable($User->getName());
+		 $id = $mysql->checkVariable($User->getId());
 		 $password = $mysql->checkVariable($User->getPassword());
+		 $username = $mysql->checkVariable($User->getUsername());
 		 return $mysql->update(
-				"UPDATE `user` SET`email`='$email',`username`='$username',`name`='$name',`password`='$password' WHERE `id` = '$id' " 
+				"UPDATE `user` SET`email`='$email',`name`='$name',`password`='$password',`username`='$username' WHERE `id` = '$id' " 
 		);
 	}
 
@@ -97,10 +97,10 @@
 		$mysql = MysqlDBC::getInstance();
 		
 		 $email = $mysql->checkVariable($User->getEmail());
-		 $username = $mysql->checkVariable($User->getUsername());
-		 $id = $mysql->checkVariable($User->getId());
 		 $name = $mysql->checkVariable($User->getName());
+		 $id = $mysql->checkVariable($User->getId());
 		 $password = $mysql->checkVariable($User->getPassword());
+		 $username = $mysql->checkVariable($User->getUsername());
 		 return $mysql->delete("DELETE FROM `user` WHERE `id` = '$id' LIMIT 1"
 		);
 	}
@@ -142,10 +142,10 @@
 	public function toArray() {
 		return array(
 			'email' => $this->getEmail(),
-			'username' => $this->getUsername(),
-			'id' => $this->getId(),
 			'name' => $this->getName(),
-			'password' => $this->getPassword()
+			'id' => $this->getId(),
+			'password' => $this->getPassword(),
+			'username' => $this->getUsername()
 		 );
 	}
 }

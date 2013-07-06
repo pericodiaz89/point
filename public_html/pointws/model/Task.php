@@ -1,43 +1,51 @@
 <?php 
  class Task {
 
-	 private $project_id;
-	 private $sprint_id;
-	 private $description;
-	 private $name;
 	 private $points;
-	 private $department_id;
-	 private $component_id;
-	 private $user_id;
 	 private $id;
+	 private $sprint_id;
+	 private $project_id;
+	 private $component_id;
+	 private $department_id;
+	 private $user_id;
+	 private $name;
+	 private $description;
 
- function __construct($project_id, $sprint_id, $description, $name, $points, $department_id, $component_id, $user_id, $id){
-		 $this->project_id=$project_id;
-		 $this->sprint_id=$sprint_id;
-		 $this->description=$description;
-		 $this->name=$name;
+ function __construct($points, $id, $sprint_id, $project_id, $component_id, $department_id, $user_id, $name, $description){
 		 $this->points=$points;
-		 $this->department_id=$department_id;
-		 $this->component_id=$component_id;
-		 $this->user_id=$user_id;
 		 $this->id=$id;
+		 $this->sprint_id=$sprint_id;
+		 $this->project_id=$project_id;
+		 $this->component_id=$component_id;
+		 $this->department_id=$department_id;
+		 $this->user_id=$user_id;
+		 $this->name=$name;
+		 $this->description=$description;
 	}
  
 	public static function get($object){
 		if(property_exists($object, "Task")){
 			$object = $object->Task;
 		}
-		return new Task ($object->project_id, $object->sprint_id, $object->description, $object->name, $object->points, $object->department_id, $object->component_id, $object->user_id, $object->id);
+		return new Task ($object->points, $object->id, $object->sprint_id, $object->project_id, $object->component_id, $object->department_id, $object->user_id, $object->name, $object->description);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
 
-	 public function getProject_id() {
-		 return $this->project_id;
+	 public function getPoints() {
+		 return $this->points;
 	 }
 
-	 public function setProject_id($project_id){
-		$this->project_id = $project_id;
+	 public function setPoints($points){
+		$this->points = $points;
+	}
+
+	 public function getId() {
+		 return $this->id;
+	 }
+
+	 public function setId($id){
+		$this->id = $id;
 	}
 
 	 public function getSprint_id() {
@@ -48,36 +56,12 @@
 		$this->sprint_id = $sprint_id;
 	}
 
-	 public function getDescription() {
-		 return $this->description;
+	 public function getProject_id() {
+		 return $this->project_id;
 	 }
 
-	 public function setDescription($description){
-		$this->description = $description;
-	}
-
-	 public function getName() {
-		 return $this->name;
-	 }
-
-	 public function setName($name){
-		$this->name = $name;
-	}
-
-	 public function getPoints() {
-		 return $this->points;
-	 }
-
-	 public function setPoints($points){
-		$this->points = $points;
-	}
-
-	 public function getDepartment_id() {
-		 return $this->department_id;
-	 }
-
-	 public function setDepartment_id($department_id){
-		$this->department_id = $department_id;
+	 public function setProject_id($project_id){
+		$this->project_id = $project_id;
 	}
 
 	 public function getComponent_id() {
@@ -88,6 +72,14 @@
 		$this->component_id = $component_id;
 	}
 
+	 public function getDepartment_id() {
+		 return $this->department_id;
+	 }
+
+	 public function setDepartment_id($department_id){
+		$this->department_id = $department_id;
+	}
+
 	 public function getUser_id() {
 		 return $this->user_id;
 	 }
@@ -96,12 +88,20 @@
 		$this->user_id = $user_id;
 	}
 
-	 public function getId() {
-		 return $this->id;
+	 public function getName() {
+		 return $this->name;
 	 }
 
-	 public function setId($id){
-		$this->id = $id;
+	 public function setName($name){
+		$this->name = $name;
+	}
+
+	 public function getDescription() {
+		 return $this->description;
+	 }
+
+	 public function setDescription($description){
+		$this->description = $description;
 	}
 	// </editor-fold>
 
@@ -110,50 +110,50 @@
 	 public static function create($Task){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $project_id = $mysql->checkVariable($Task->getProject_id());
-		 $sprint_id = $mysql->checkVariable($Task->getSprint_id());
-		 $description = $mysql->checkVariable($Task->getDescription());
-		 $name = $mysql->checkVariable($Task->getName());
 		 $points = $mysql->checkVariable($Task->getPoints());
-		 $department_id = $mysql->checkVariable($Task->getDepartment_id());
-		 $component_id = $mysql->checkVariable($Task->getComponent_id());
-		 $user_id = $mysql->checkVariable($Task->getUser_id());
 		 $id = $mysql->checkVariable($Task->getId());
+		 $sprint_id = $mysql->checkVariable($Task->getSprint_id());
+		 $project_id = $mysql->checkVariable($Task->getProject_id());
+		 $component_id = $mysql->checkVariable($Task->getComponent_id());
+		 $department_id = $mysql->checkVariable($Task->getDepartment_id());
+		 $user_id = $mysql->checkVariable($Task->getUser_id());
+		 $name = $mysql->checkVariable($Task->getName());
+		 $description = $mysql->checkVariable($Task->getDescription());
 		return $mysql->insert(
-				 " INSERT INTO `task` (`project_id`,`sprint_id`,`description`,`name`,`points`,`department_id`,`component_id`,`user_id`,`id`) VALUES ('$project_id','$sprint_id','$description','$name','$points','$department_id','$component_id','$user_id','$id')"
+				 " INSERT INTO `task` (`points`,`id`,`sprint_id`,`project_id`,`component_id`,`department_id`,`user_id`,`name`,`description`) VALUES ('$points','$id','$sprint_id','$project_id','$component_id','$department_id','$user_id','$name','$description')"
 		);
 	}
 
 	 public static function modify($Task){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $project_id = $mysql->checkVariable($Task->getProject_id());
-		 $sprint_id = $mysql->checkVariable($Task->getSprint_id());
-		 $description = $mysql->checkVariable($Task->getDescription());
-		 $name = $mysql->checkVariable($Task->getName());
 		 $points = $mysql->checkVariable($Task->getPoints());
-		 $department_id = $mysql->checkVariable($Task->getDepartment_id());
-		 $component_id = $mysql->checkVariable($Task->getComponent_id());
-		 $user_id = $mysql->checkVariable($Task->getUser_id());
 		 $id = $mysql->checkVariable($Task->getId());
+		 $sprint_id = $mysql->checkVariable($Task->getSprint_id());
+		 $project_id = $mysql->checkVariable($Task->getProject_id());
+		 $component_id = $mysql->checkVariable($Task->getComponent_id());
+		 $department_id = $mysql->checkVariable($Task->getDepartment_id());
+		 $user_id = $mysql->checkVariable($Task->getUser_id());
+		 $name = $mysql->checkVariable($Task->getName());
+		 $description = $mysql->checkVariable($Task->getDescription());
 		 return $mysql->update(
-				"UPDATE `task` SET`project_id`='$project_id',`sprint_id`='$sprint_id',`description`='$description',`name`='$name',`points`='$points',`department_id`='$department_id',`component_id`='$component_id',`user_id`='$user_id' WHERE `id` = '$id' " 
+				"UPDATE `task` SET`points`='$points',`sprint_id`='$sprint_id',`component_id`='$component_id',`department_id`='$department_id',`user_id`='$user_id',`name`='$name',`description`='$description' WHERE `id` = '$id' AND `project_id` = '$project_id' " 
 		);
 	}
 
 	public static function delete($Task){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $project_id = $mysql->checkVariable($Task->getProject_id());
-		 $sprint_id = $mysql->checkVariable($Task->getSprint_id());
-		 $description = $mysql->checkVariable($Task->getDescription());
-		 $name = $mysql->checkVariable($Task->getName());
 		 $points = $mysql->checkVariable($Task->getPoints());
-		 $department_id = $mysql->checkVariable($Task->getDepartment_id());
-		 $component_id = $mysql->checkVariable($Task->getComponent_id());
-		 $user_id = $mysql->checkVariable($Task->getUser_id());
 		 $id = $mysql->checkVariable($Task->getId());
-		 return $mysql->delete("DELETE FROM `task` WHERE `id` = '$id' LIMIT 1"
+		 $sprint_id = $mysql->checkVariable($Task->getSprint_id());
+		 $project_id = $mysql->checkVariable($Task->getProject_id());
+		 $component_id = $mysql->checkVariable($Task->getComponent_id());
+		 $department_id = $mysql->checkVariable($Task->getDepartment_id());
+		 $user_id = $mysql->checkVariable($Task->getUser_id());
+		 $name = $mysql->checkVariable($Task->getName());
+		 $description = $mysql->checkVariable($Task->getDescription());
+		 return $mysql->delete("DELETE FROM `task` WHERE `id` = '$id' AND `project_id` = '$project_id' LIMIT 1"
 		);
 	}
 
@@ -193,15 +193,15 @@
 
 	public function toArray() {
 		return array(
-			'project_id' => $this->getProject_id(),
-			'sprint_id' => $this->getSprint_id(),
-			'description' => $this->getDescription(),
-			'name' => $this->getName(),
 			'points' => $this->getPoints(),
-			'department_id' => $this->getDepartment_id(),
+			'id' => $this->getId(),
+			'sprint_id' => $this->getSprint_id(),
+			'project_id' => $this->getProject_id(),
 			'component_id' => $this->getComponent_id(),
+			'department_id' => $this->getDepartment_id(),
 			'user_id' => $this->getUser_id(),
-			'id' => $this->getId()
+			'name' => $this->getName(),
+			'description' => $this->getDescription()
 		 );
 	}
 }

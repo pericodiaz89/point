@@ -1,30 +1,22 @@
 <?php 
  class Department {
 
-	 private $name;
 	 private $id;
+	 private $name;
 
- function __construct($name, $id){
-		 $this->name=$name;
+ function __construct($id, $name){
 		 $this->id=$id;
+		 $this->name=$name;
 	}
  
 	public static function get($object){
 		if(property_exists($object, "Department")){
 			$object = $object->Department;
 		}
-		return new Department ($object->name, $object->id);
+		return new Department ($object->id, $object->name);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
-
-	 public function getName() {
-		 return $this->name;
-	 }
-
-	 public function setName($name){
-		$this->name = $name;
-	}
 
 	 public function getId() {
 		 return $this->id;
@@ -33,6 +25,14 @@
 	 public function setId($id){
 		$this->id = $id;
 	}
+
+	 public function getName() {
+		 return $this->name;
+	 }
+
+	 public function setName($name){
+		$this->name = $name;
+	}
 	// </editor-fold>
 
  // <editor-fold defaultstate="collapsed" desc="CRUD">
@@ -40,18 +40,18 @@
 	 public static function create($Department){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $name = $mysql->checkVariable($Department->getName());
 		 $id = $mysql->checkVariable($Department->getId());
+		 $name = $mysql->checkVariable($Department->getName());
 		return $mysql->insert(
-				 " INSERT INTO `department` (`name`,`id`) VALUES ('$name','$id')"
+				 " INSERT INTO `department` (`id`,`name`) VALUES ('$id','$name')"
 		);
 	}
 
 	 public static function modify($Department){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $name = $mysql->checkVariable($Department->getName());
 		 $id = $mysql->checkVariable($Department->getId());
+		 $name = $mysql->checkVariable($Department->getName());
 		 return $mysql->update(
 				"UPDATE `department` SET`name`='$name' WHERE `id` = '$id' " 
 		);
@@ -60,8 +60,8 @@
 	public static function delete($Department){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $name = $mysql->checkVariable($Department->getName());
 		 $id = $mysql->checkVariable($Department->getId());
+		 $name = $mysql->checkVariable($Department->getName());
 		 return $mysql->delete("DELETE FROM `department` WHERE `id` = '$id' LIMIT 1"
 		);
 	}
@@ -102,8 +102,8 @@
 
 	public function toArray() {
 		return array(
-			'name' => $this->getName(),
-			'id' => $this->getId()
+			'id' => $this->getId(),
+			'name' => $this->getName()
 		 );
 	}
 }
