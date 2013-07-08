@@ -2,6 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
+$(document).ready(function() {
+    $("#tableProyects").click(function() {
+        Projects.forEach(function(p) {
+            $("#"+p.id).click(function() {
+                localStorage.setItem('project', JSON.stringify(p));
+                window.top.location.href = 'project.html';
+            });
+        });
+    });
+});
+
 var user;
 window.onload = checkUser();
 
@@ -18,12 +30,11 @@ function checkUser(){
 }
 
 function getFinished(data) {
-    console.log(data);
     var table = new Array();
     var args = new Array();
     var i = 0;
     table[0] = "#";
-    table[1] = "Name"
+    table[1] = "Name";
     data.forEach(function(element){
         args[i] = new Array();
         args[i][0] = element.id;
