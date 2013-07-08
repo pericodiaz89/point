@@ -43,7 +43,7 @@
 		 $id = $mysql->checkVariable($Project->getId());
 		 $name = $mysql->checkVariable($Project->getName());
 		return $mysql->insert(
-				 " INSERT INTO `project` (`id`,`name`) VALUES ('$id','$name')"
+				 " INSERT INTO `project` (`id`,`name`) VALUES ($id,$name)"
 		);
 	}
 
@@ -53,7 +53,7 @@
 		 $id = $mysql->checkVariable($Project->getId());
 		 $name = $mysql->checkVariable($Project->getName());
 		 return $mysql->update(
-				"UPDATE `project` SET`name`='$name' WHERE `id` = '$id' " 
+				"UPDATE `project` SET`name`=$name WHERE `id` = '$id' " 
 		);
 	}
 

@@ -76,7 +76,7 @@
 		 $id = $mysql->checkVariable($Sprint->getId());
 		 $date = $mysql->checkVariable($Sprint->getDate());
 		return $mysql->insert(
-				 " INSERT INTO `sprint` (`project_id`,`description`,`name`,`id`,`date`) VALUES ('$project_id','$description','$name','$id','$date')"
+				 " INSERT INTO `sprint` (`project_id`,`description`,`name`,`id`,`date`) VALUES ($project_id,$description,$name,$id,$date)"
 		);
 	}
 
@@ -89,7 +89,7 @@
 		 $id = $mysql->checkVariable($Sprint->getId());
 		 $date = $mysql->checkVariable($Sprint->getDate());
 		 return $mysql->update(
-				"UPDATE `sprint` SET`description`='$description',`name`='$name',`date`='$date' WHERE `project_id` = '$project_id' AND `id` = '$id' " 
+				"UPDATE `sprint` SET`description`=$description,`name`=$name,`date`=$date WHERE `project_id` = '$project_id' AND `id` = '$id' " 
 		);
 	}
 

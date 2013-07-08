@@ -76,7 +76,7 @@
 		 $username = $mysql->checkVariable($User->getUsername());
 		 $email = $mysql->checkVariable($User->getEmail());
 		return $mysql->insert(
-				 " INSERT INTO `user` (`id`,`name`,`password`,`username`,`email`) VALUES ('$id','$name','$password','$username','$email')"
+				 " INSERT INTO `user` (`id`,`name`,`password`,`username`,`email`) VALUES ($id,$name,$password,$username,$email)"
 		);
 	}
 
@@ -89,7 +89,7 @@
 		 $username = $mysql->checkVariable($User->getUsername());
 		 $email = $mysql->checkVariable($User->getEmail());
 		 return $mysql->update(
-				"UPDATE `user` SET`name`='$name',`password`='$password',`username`='$username',`email`='$email' WHERE `id` = '$id' " 
+				"UPDATE `user` SET`name`=$name,`password`=$password,`username`=$username,`email`=$email WHERE `id` = '$id' " 
 		);
 	}
 

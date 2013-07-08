@@ -43,7 +43,7 @@
 		 $id = $mysql->checkVariable($Department->getId());
 		 $name = $mysql->checkVariable($Department->getName());
 		return $mysql->insert(
-				 " INSERT INTO `department` (`id`,`name`) VALUES ('$id','$name')"
+				 " INSERT INTO `department` (`id`,`name`) VALUES ($id,$name)"
 		);
 	}
 
@@ -53,7 +53,7 @@
 		 $id = $mysql->checkVariable($Department->getId());
 		 $name = $mysql->checkVariable($Department->getName());
 		 return $mysql->update(
-				"UPDATE `department` SET`name`='$name' WHERE `id` = '$id' " 
+				"UPDATE `department` SET`name`=$name WHERE `id` = '$id' " 
 		);
 	}
 

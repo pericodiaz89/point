@@ -43,7 +43,7 @@
 		 $parent = $mysql->checkVariable($Componentchild->getParent());
 		 $child = $mysql->checkVariable($Componentchild->getChild());
 		return $mysql->insert(
-				 " INSERT INTO `componentchild` (`parent`,`child`) VALUES ('$parent','$child')"
+				 " INSERT INTO `componentchild` (`parent`,`child`) VALUES ($parent,$child)"
 		);
 	}
 

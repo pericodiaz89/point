@@ -43,7 +43,7 @@
 		 $name = $mysql->checkVariable($Task_state->getName());
 		 $id = $mysql->checkVariable($Task_state->getId());
 		return $mysql->insert(
-				 " INSERT INTO `task_state` (`name`,`id`) VALUES ('$name','$id')"
+				 " INSERT INTO `task_state` (`name`,`id`) VALUES ($name,$id)"
 		);
 	}
 
@@ -53,7 +53,7 @@
 		 $name = $mysql->checkVariable($Task_state->getName());
 		 $id = $mysql->checkVariable($Task_state->getId());
 		 return $mysql->update(
-				"UPDATE `task_state` SET`name`='$name' WHERE `id` = '$id' " 
+				"UPDATE `task_state` SET`name`=$name WHERE `id` = '$id' " 
 		);
 	}
 

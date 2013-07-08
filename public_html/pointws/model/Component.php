@@ -54,7 +54,7 @@
 		 $name = $mysql->checkVariable($Component->getName());
 		 $id = $mysql->checkVariable($Component->getId());
 		return $mysql->insert(
-				 " INSERT INTO `component` (`project_id`,`name`,`id`) VALUES ('$project_id','$name','$id')"
+				 " INSERT INTO `component` (`project_id`,`name`,`id`) VALUES ($project_id,$name,$id)"
 		);
 	}
 
@@ -65,7 +65,7 @@
 		 $name = $mysql->checkVariable($Component->getName());
 		 $id = $mysql->checkVariable($Component->getId());
 		 return $mysql->update(
-				"UPDATE `component` SET`name`='$name' WHERE `project_id` = '$project_id' AND `id` = '$id' " 
+				"UPDATE `component` SET`name`=$name WHERE `project_id` = '$project_id' AND `id` = '$id' " 
 		);
 	}
 

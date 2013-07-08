@@ -131,7 +131,7 @@
 		 $description = $mysql->checkVariable($Task->getDescription());
 		 $state_id = $mysql->checkVariable($Task->getState_id());
 		return $mysql->insert(
-				 " INSERT INTO `task` (`user_id`,`id`,`sprint_id`,`component_id`,`points`,`project_id`,`department_id`,`name`,`description`,`state_id`) VALUES ('$user_id','$id','$sprint_id','$component_id','$points','$project_id','$department_id','$name','$description','$state_id')"
+				 " INSERT INTO `task` (`user_id`,`id`,`sprint_id`,`component_id`,`points`,`project_id`,`department_id`,`name`,`description`,`state_id`) VALUES ($user_id,$id,$sprint_id,$component_id,$points,$project_id,$department_id,$name,$description,$state_id)"
 		);
 	}
 
@@ -149,7 +149,7 @@
 		 $description = $mysql->checkVariable($Task->getDescription());
 		 $state_id = $mysql->checkVariable($Task->getState_id());
 		 return $mysql->update(
-				"UPDATE `task` SET`user_id`='$user_id',`sprint_id`='$sprint_id',`component_id`='$component_id',`points`='$points',`department_id`='$department_id',`name`='$name',`description`='$description',`state_id`='$state_id' WHERE `id` = '$id' AND `project_id` = '$project_id' " 
+				"UPDATE `task` SET`user_id`=$user_id,`sprint_id`=$sprint_id,`component_id`=$component_id,`points`=$points,`department_id`=$department_id,`name`=$name,`description`=$description,`state_id`=$state_id WHERE `id` = '$id' AND `project_id` = '$project_id' " 
 		);
 	}
 

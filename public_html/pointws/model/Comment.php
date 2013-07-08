@@ -76,7 +76,7 @@
 		 $time = $mysql->checkVariable($Comment->getTime());
 		 $user_id = $mysql->checkVariable($Comment->getUser_id());
 		return $mysql->insert(
-				 " INSERT INTO `comment` (`comment`,`task_id`,`id`,`time`,`user_id`) VALUES ('$comment','$task_id','$id','$time','$user_id')"
+				 " INSERT INTO `comment` (`comment`,`task_id`,`id`,`time`,`user_id`) VALUES ($comment,$task_id,$id,$time,$user_id)"
 		);
 	}
 
@@ -89,7 +89,7 @@
 		 $time = $mysql->checkVariable($Comment->getTime());
 		 $user_id = $mysql->checkVariable($Comment->getUser_id());
 		 return $mysql->update(
-				"UPDATE `comment` SET`comment`='$comment',`time`='$time',`user_id`='$user_id' WHERE `task_id` = '$task_id' AND `id` = '$id' " 
+				"UPDATE `comment` SET`comment`=$comment,`time`=$time,`user_id`=$user_id WHERE `task_id` = '$task_id' AND `id` = '$id' " 
 		);
 	}
 
