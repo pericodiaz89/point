@@ -22,8 +22,8 @@ function checkUser(){
          window.top.location.href = 'index.html';
     }else{
         var u = jQuery.parseJSON(localStorage.getItem('user'));
-        user = new User(u.name, u.password, u.id, u.email, u.name);
-        
+        user = new User(u.id, u.name, u.password, u.username, u.email);
+        User (id,name,password,username,email)
         document.getElementById("lUsername").innerHTML = user.name;
         Project.get(0,20);
     }

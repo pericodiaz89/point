@@ -33,9 +33,9 @@ function checkUser(){
          window.top.location.href = 'index.html';
     }else{
         var u = jQuery.parseJSON(localStorage.getItem('user'));
-        user = new User(u.name, u.password, u.id, u.email, u.name);
+        user = new User(u.id, u.name, u.password, u.username, u.email);
         var p = jQuery.parseJSON(localStorage.getItem('project'));
-        project = new Project(p.name, p.id);
+        project = new Project(p.id, p.name);
         document.getElementById("lUsername").innerHTML = user.name;
         document.getElementById("projectName").innerHTML = project.name;
         document.getElementById("lcurrentSprint").innerHTML = "Backlog";
