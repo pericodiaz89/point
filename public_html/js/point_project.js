@@ -13,10 +13,35 @@ $(document).ready(function() {
         nSprint.create();
     });
     $("#bCrateTask").click(function(){
-        console.log(tTaskName.value);
-        console.log(tTaskDescription.value);
-        console.log($("#rbOptionNewTask1").attr());
+        var name = tTaskName.value;
+        console.log(name);
+        var desc = tTaskDescription.value;
+        console.log(desc);
+        if ($("input[type='radio'].radioNewTask").is(':checked')) {
+            var points = $("input[type='radio'].radioNewTask:checked").val();
+            console.log(points);
+        }
+        var dep = document.getElementById("sSetDepartment");
+        var depVal = dep.options[dep.selectedIndex].value;
+        console.log(depVal);
+        var status = document.getElementById("sSetStatus");
+        var statusVal =  status.options[status.selectedIndex].value;
+        console.log(statusVal);
+        var user = document.getElementById("sSetUser");
+        var userVal = user.options[user.selectedIndex].value;
+        console.log(userVal);
+        var comp = document.getElementById("sSetComponent");
+        var compVal = comp.options[comp.selectedIndex].value;
+        console.log(compVal);
+        var sprint = document.getElementById("sSprint");
+        var SprintVal = sprint.options[sprint.selectedIndex].value;;
+        
+        var newTask = new Task(userVal, "null", SprintVal, compVal, points, project.id, depVal, name, desc, statusVal );
+        newTask.create();
+        
     });
+    
+         Task.get(0,10,{"project_id" : project.id});
 });
 
 var user;
@@ -35,7 +60,7 @@ function checkUser(){
         var u = jQuery.parseJSON(localStorage.getItem('user'));
         user = new User(u.id, u.name, u.password, u.username, u.email);
         var p = jQuery.parseJSON(localStorage.getItem('project'));
-        project = new Project(p.id, p.name);
+        project = new Project( p.id,p.name);
         document.getElementById("lUsername").innerHTML = user.name;
         document.getElementById("projectName").innerHTML = project.name;
         document.getElementById("lcurrentSprint").innerHTML = "Backlog";
@@ -43,7 +68,10 @@ function checkUser(){
         Sprint.get(0,20,{"project_id" : project.id});
         Department.get(0,10);
         User.get(0,10);
-        Task.get(0,10,{"project_id" : project.id});
+        Component.get(0,0,{"project_id" : project.id});
+        Task_state.get(0,0);
+        
+       
     }
 }
 
@@ -51,6 +79,8 @@ var initSprint = false;
 var initDepartment = false;
 var initUser = false;
 var initTask = false;
+var initComponent = false;
+var initTask_state = false;
 
 function getFinished(data) {
     var tipe;
@@ -58,39 +88,46 @@ function getFinished(data) {
     var table = new Array();
     var args = new Array();
     var i = 0;
-    
+
     data.forEach(function(element) {
-        if(first){
+        if (first) {
             tipe = element;
         }
-        if  (element instanceof Sprint && !initSprint) {
+        if (element instanceof Sprint && !initSprint) {
             if (first) {
-                document.getElementById("sSprintChange").innerHTML = "<option> Backlog</option>";
-                document.getElementById("sSprint").innerHTML = "<option> Backlog</option>";
+                document.getElementById("sSprintChange").innerHTML = "<option value=\"null\"> Backlog</option>";
+                document.getElementById("sSprint").innerHTML = "<option value=\"null\"> Backlog</option>";
                 first = false;
             }
-            document.getElementById("sSprintChange").innerHTML += "<option>" + element.name + " </option>";
-            document.getElementById("sSprint").innerHTML += "<option>" + element.name + " </option>";
-        } else if(element instanceof Sprint){
-            
-        }else if (element instanceof Department && !initDepartment) {
+            document.getElementById("sSprintChange").innerHTML += "<option value=\"" + element.id + "\">" + element.name + " </option>";
+            document.getElementById("sSprint").innerHTML += "<option value=\"" + element.id + "\">" + element.name + " </option>";
+        } else if (element instanceof Sprint) {
+
+        } else if (element instanceof Department && !initDepartment) {
             if (first) {
-                document.getElementById("sDepartment").innerHTML += "<option> All </option>";
+                document.getElementById("sDepartment").innerHTML += "<option value=\"NULL\"> All </option>";
                 first = false;
             }
-            document.getElementById("sDepartment").innerHTML += "<option>" + element.name + " </option>";
-        }else if(element instanceof Department){
+            //$("#sSetDepartment").append("<option>" + element.name + " </option>");
+            $("#sSetDepartment").append("<option value=\"" + element.id + "\">" + element.name + " </option>");
+            //$("#sSetDepartment").val(element.id);
             
-        }else if(element instanceof User && !initUser){
-            if(first){
-                document.getElementById("sUser").innerHTML = "<option> All </option>";
+           //document.getElementById("sSetDepartment").value = element.id;
+            document.getElementById("sDepartment").innerHTML += "<option value=\"" + element.id + "\">" + element.name + " </option>";
+        } else if (element instanceof Department) {
+
+        } else if (element instanceof User && !initUser) {
+            if (first) {
+                document.getElementById("sUser").innerHTML = "<option value=\"null\"> All </option>";
+                document.getElementById("sSetUser").innerHTML = "<option value=\"null\"> N.A. </option>";
                 first = false;
             }
-            document.getElementById("sUser").innerHTML += "<option>"+element.name+"</option>";
-        }else if(element instanceof User){
-            
-        }else if (element instanceof Task && !initTask){
-            if(first){
+            document.getElementById("sUser").innerHTML += "<option value=\"" + element.id + "\">" + element.name + "</option>";
+            document.getElementById("sSetUser").innerHTML += "<option value=\"" + element.id + "\">" + element.name + "</option>";
+        } else if (element instanceof User) {
+
+        } else if (element instanceof Task && !initTask) {
+            if (first) {
                 table[0] = "✓";
                 table[1] = "#";
                 table[2] = "Name";
@@ -107,25 +144,54 @@ function getFinished(data) {
             args[i][2] = element.id;
             args[i][3] = element.name;
             args[i][4] = element.points;
-            args[i][5] = element.user_id;
-            args[i][6] = element.department_id;
-            args[i][7] = element.component_id;
-            args[i][8] = "new";
+            if (element.user_id != null) {
+                args[i][5] = Users[element.user_id].name;
+            } else {
+                args[i][5] = "N/A";
+            }
+            args[i][6] = Departments[element.department_id].name;
+            if (element.component_id != null) {
+                args[i][7] = Components[element.component_id].name;
+            } else {
+                args[i][7] = "N/A";
+            }
+            args[i][8] = Task_states[element.state_id].name;
             i++;
-        }else if (element instanceof Task){
-            
+        } else if (element instanceof Task) {
+
+        } else if (element instanceof Component && !initComponent) {
+            if (first) {
+                document.getElementById("sComponent").innerHTML = "<option value=\"null\"> All </option>";
+                first = false;
+            }
+            document.getElementById("sComponent").innerHTML += "<option value=\"" + element.id + "\">" + element.name + "</option>";
+            document.getElementById("sSetComponent").innerHTML += "<option value=\"" + element.id + "\">" + element.name + "</option>";
+        } else if (element instanceof Component) {
+
+        } else if (element instanceof Task_state && !initTask_state) {
+            if (first) {
+                document.getElementById("sStatus").innerHTML = "<option value=\"null\"> All </option>";
+                first = false;
+            }
+            document.getElementById("sSetStatus").innerHTML += "<option value=\"" + element.id + "\">" + element.name + "</option>";
+            document.getElementById("sStatus").innerHTML += "<option value=\"" + element.id + "\">" + element.name + "</option>";
+        } else if (element instanceof Task_state) {
+
         }
     });
-    
-    
-     if  (tipe instanceof Sprint && !initSprint) {
-         initSprint = true;
-     }else if(tipe instanceof Department && !initDepartment){
-         initDepartment = true;
-     }else if (tipe instanceof User && !initUser){
-         initUser = true;
-     }
-    if(tipe instanceof Task){
+
+
+    if (tipe instanceof Sprint && !initSprint) {
+        initSprint = true;
+    } else if (tipe instanceof Department && !initDepartment) {
+        initDepartment = true;
+    } else if (tipe instanceof User && !initUser) {
+        initUser = true;
+    } else if (tipe instanceof Task) {
         document.getElementById("tableTasks").innerHTML = generateTable(table, args);
+    } else if (tipe instanceof Component && !initComponent) {
+        intitComponent = true;
+    } else if (tipe instanceof Task_state && !initTask_state) {
+        initTask_state = true;
     }
 }

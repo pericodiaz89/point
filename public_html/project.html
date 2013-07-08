@@ -59,22 +59,22 @@
                             <option>Game Design</option>-->
                         </select>
                         <label class="label">Status</label>
-                        <select >
-                            <option>New</option>
+                        <select id="sStatus" >
+<!--                            <option>New</option>
                             <option>Assigned</option>
                             <option>Testing</option>
                             <option>Closed</option>
-                            <option>Invalid</option>
+                            <option>Invalid</option>-->
                         </select>
                         <label class="label">User</label>
                         <select id="sUser">
 <!--                        <option>rdiazbe (Rodrigo Diaz Bermudez)</option>
                             <option>mateoc</option>-->
                         </select>
-                        <label class="label">Component</label>
-                        <select>
-                            <option>Bugs</option>
-                            <option>Buildings</option>
+                        <label  class="label">Component</label>
+                        <select id="sComponent">
+<!--                            <option>Bugs</option>
+                            <option>Buildings</option>-->
                         </select>
                     </div>
                 </form>
@@ -144,50 +144,51 @@
                     <textarea id="tTaskDescription" class="row-fluid" rows="3"></textarea>
                     <label class="inline">Points</label>
                     <label class="radio inline">
-                        <input type="radio" name="optionsRadios" id="rbOptionNewTask1" value="1" checked>
+                        <input type="radio" name="optionsRadios" id="rbOptionNewTask1" value="1" checked class ="radioNewTask" >
                         <span class="badge badge-success">1</span>
                     </label>
                     <label class="radio inline">
-                        <input type="radio" name="optionsRadios" id="rbOptionNewTask2" value="2">
+                        <input type="radio" name="optionsRadios" id="rbOptionNewTask2" value="2" class ="radioNewTask">
                         <span class="badge badge-warning">2</span>
                     </label>
                     <label class="radio inline">
-                        <input type="radio" name="optionsRadios" id="rbOptionNewTask3" value="3">
+                        <input type="radio" name="optionsRadios" id="rbOptionNewTask3" value="3" class ="radioNewTask">
                         <span class="badge badge-important">3</span>
                     </label>
 
                     <table class="row-fluid">
                         <tr>
                             <td><label class="label">Department</label>
-                                <select class="modal-select">
-                                    <option>All</option>
+                                <select id="sSetDepartment" class="modal-select">
+<!--                                    <option>All</option>
                                     <option>Programming</option>
                                     <option>Art</option>
                                     <option>Administration</option>
-                                    <option>Game Design</option>
+                                    <option>Game Design</option>-->
                                 </select></td>
                                 <td><label class="label">Status</label>
-                                    <select class="modal-select">
-                                        <option>New</option>
+                                    <select id ="sSetStatus" class="modal-select">
+<!--                                        <option>New</option>
                                         <option>Assigned</option>
                                         <option>Testing</option>
                                         <option>Closed</option>
-                                        <option>Invalid</option>
+                                        <option>Invalid</option>-->
                                     </select>
                                 </td>
                         </tr>
                         <tr>
                             <td>
                                 <label class="label">User</label>
-                                <select class="modal-select">
-                                    <option>rdiazbe</option>
-                                    <option>mateoc</option>
+                                <select id="sSetUser" class="modal-select">
+<!--                                    <option>rdiazbe</option>
+                                    <option>mateoc</option>-->
                                 </select>
                             </td>
                             <td><label class="label">Component</label>
-                                <select class="modal-select">
-                                    <option>Bugs</option>
-                                    <option>Buildings</option>
+                                <select id="sSetComponent" class="modal-select">
+                                    <option value="NULL">N.A.</option>
+<!--                                    <option>Bugs</option>
+                                    <option>Buildings</option>-->
                                 </select>
                             </td>
                         </tr>
