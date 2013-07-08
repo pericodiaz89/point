@@ -1,17 +1,17 @@
 <?php 
  class Comment {
 
-	 private $id;
-	 private $task_id;
-	 private $time;
 	 private $comment;
+	 private $task_id;
+	 private $id;
+	 private $time;
 	 private $user_id;
 
- function __construct($id, $task_id, $time, $comment, $user_id){
-		 $this->id=$id;
-		 $this->task_id=$task_id;
-		 $this->time=$time;
+ function __construct($comment, $task_id, $id, $time, $user_id){
 		 $this->comment=$comment;
+		 $this->task_id=$task_id;
+		 $this->id=$id;
+		 $this->time=$time;
 		 $this->user_id=$user_id;
 	}
  
@@ -19,17 +19,17 @@
 		if(property_exists($object, "Comment")){
 			$object = $object->Comment;
 		}
-		return new Comment ($object->id, $object->task_id, $object->time, $object->comment, $object->user_id);
+		return new Comment ($object->comment, $object->task_id, $object->id, $object->time, $object->user_id);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
 
-	 public function getId() {
-		 return $this->id;
+	 public function getComment() {
+		 return $this->comment;
 	 }
 
-	 public function setId($id){
-		$this->id = $id;
+	 public function setComment($comment){
+		$this->comment = $comment;
 	}
 
 	 public function getTask_id() {
@@ -40,20 +40,20 @@
 		$this->task_id = $task_id;
 	}
 
+	 public function getId() {
+		 return $this->id;
+	 }
+
+	 public function setId($id){
+		$this->id = $id;
+	}
+
 	 public function getTime() {
 		 return $this->time;
 	 }
 
 	 public function setTime($time){
 		$this->time = $time;
-	}
-
-	 public function getComment() {
-		 return $this->comment;
-	 }
-
-	 public function setComment($comment){
-		$this->comment = $comment;
 	}
 
 	 public function getUser_id() {
@@ -70,38 +70,38 @@
 	 public static function create($Comment){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $id = $mysql->checkVariable($Comment->getId());
-		 $task_id = $mysql->checkVariable($Comment->getTask_id());
-		 $time = $mysql->checkVariable($Comment->getTime());
 		 $comment = $mysql->checkVariable($Comment->getComment());
+		 $task_id = $mysql->checkVariable($Comment->getTask_id());
+		 $id = $mysql->checkVariable($Comment->getId());
+		 $time = $mysql->checkVariable($Comment->getTime());
 		 $user_id = $mysql->checkVariable($Comment->getUser_id());
 		return $mysql->insert(
-				 " INSERT INTO `comment` (`id`,`task_id`,`time`,`comment`,`user_id`) VALUES ('$id','$task_id','$time','$comment','$user_id')"
+				 " INSERT INTO `comment` (`comment`,`task_id`,`id`,`time`,`user_id`) VALUES ('$comment','$task_id','$id','$time','$user_id')"
 		);
 	}
 
 	 public static function modify($Comment){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $id = $mysql->checkVariable($Comment->getId());
-		 $task_id = $mysql->checkVariable($Comment->getTask_id());
-		 $time = $mysql->checkVariable($Comment->getTime());
 		 $comment = $mysql->checkVariable($Comment->getComment());
+		 $task_id = $mysql->checkVariable($Comment->getTask_id());
+		 $id = $mysql->checkVariable($Comment->getId());
+		 $time = $mysql->checkVariable($Comment->getTime());
 		 $user_id = $mysql->checkVariable($Comment->getUser_id());
 		 return $mysql->update(
-				"UPDATE `comment` SET`time`='$time',`comment`='$comment',`user_id`='$user_id' WHERE `id` = '$id' AND `task_id` = '$task_id' " 
+				"UPDATE `comment` SET`comment`='$comment',`time`='$time',`user_id`='$user_id' WHERE `task_id` = '$task_id' AND `id` = '$id' " 
 		);
 	}
 
 	public static function delete($Comment){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $id = $mysql->checkVariable($Comment->getId());
-		 $task_id = $mysql->checkVariable($Comment->getTask_id());
-		 $time = $mysql->checkVariable($Comment->getTime());
 		 $comment = $mysql->checkVariable($Comment->getComment());
+		 $task_id = $mysql->checkVariable($Comment->getTask_id());
+		 $id = $mysql->checkVariable($Comment->getId());
+		 $time = $mysql->checkVariable($Comment->getTime());
 		 $user_id = $mysql->checkVariable($Comment->getUser_id());
-		 return $mysql->delete("DELETE FROM `comment` WHERE `id` = '$id' AND `task_id` = '$task_id' LIMIT 1"
+		 return $mysql->delete("DELETE FROM `comment` WHERE `task_id` = '$task_id' AND `id` = '$id' LIMIT 1"
 		);
 	}
 
@@ -141,10 +141,10 @@
 
 	public function toArray() {
 		return array(
-			'id' => $this->getId(),
-			'task_id' => $this->getTask_id(),
-			'time' => $this->getTime(),
 			'comment' => $this->getComment(),
+			'task_id' => $this->getTask_id(),
+			'id' => $this->getId(),
+			'time' => $this->getTime(),
 			'user_id' => $this->getUser_id()
 		 );
 	}

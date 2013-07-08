@@ -2,20 +2,20 @@
  class Component {
 
 	 private $project_id;
-	 private $id;
 	 private $name;
+	 private $id;
 
- function __construct($project_id, $id, $name){
+ function __construct($project_id, $name, $id){
 		 $this->project_id=$project_id;
-		 $this->id=$id;
 		 $this->name=$name;
+		 $this->id=$id;
 	}
  
 	public static function get($object){
 		if(property_exists($object, "Component")){
 			$object = $object->Component;
 		}
-		return new Component ($object->project_id, $object->id, $object->name);
+		return new Component ($object->project_id, $object->name, $object->id);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
@@ -28,20 +28,20 @@
 		$this->project_id = $project_id;
 	}
 
-	 public function getId() {
-		 return $this->id;
-	 }
-
-	 public function setId($id){
-		$this->id = $id;
-	}
-
 	 public function getName() {
 		 return $this->name;
 	 }
 
 	 public function setName($name){
 		$this->name = $name;
+	}
+
+	 public function getId() {
+		 return $this->id;
+	 }
+
+	 public function setId($id){
+		$this->id = $id;
 	}
 	// </editor-fold>
 
@@ -51,10 +51,10 @@
 		$mysql = MysqlDBC::getInstance();
 		
 		 $project_id = $mysql->checkVariable($Component->getProject_id());
-		 $id = $mysql->checkVariable($Component->getId());
 		 $name = $mysql->checkVariable($Component->getName());
+		 $id = $mysql->checkVariable($Component->getId());
 		return $mysql->insert(
-				 " INSERT INTO `component` (`project_id`,`id`,`name`) VALUES ('$project_id','$id','$name')"
+				 " INSERT INTO `component` (`project_id`,`name`,`id`) VALUES ('$project_id','$name','$id')"
 		);
 	}
 
@@ -62,8 +62,8 @@
 		$mysql = MysqlDBC::getInstance();
 		
 		 $project_id = $mysql->checkVariable($Component->getProject_id());
-		 $id = $mysql->checkVariable($Component->getId());
 		 $name = $mysql->checkVariable($Component->getName());
+		 $id = $mysql->checkVariable($Component->getId());
 		 return $mysql->update(
 				"UPDATE `component` SET`name`='$name' WHERE `project_id` = '$project_id' AND `id` = '$id' " 
 		);
@@ -73,8 +73,8 @@
 		$mysql = MysqlDBC::getInstance();
 		
 		 $project_id = $mysql->checkVariable($Component->getProject_id());
-		 $id = $mysql->checkVariable($Component->getId());
 		 $name = $mysql->checkVariable($Component->getName());
+		 $id = $mysql->checkVariable($Component->getId());
 		 return $mysql->delete("DELETE FROM `component` WHERE `project_id` = '$project_id' AND `id` = '$id' LIMIT 1"
 		);
 	}
@@ -116,8 +116,8 @@
 	public function toArray() {
 		return array(
 			'project_id' => $this->getProject_id(),
-			'id' => $this->getId(),
-			'name' => $this->getName()
+			'name' => $this->getName(),
+			'id' => $this->getId()
 		 );
 	}
 }

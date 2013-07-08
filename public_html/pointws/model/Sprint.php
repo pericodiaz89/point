@@ -1,43 +1,35 @@
 <?php 
  class Sprint {
 
-	 private $name;
-	 private $date;
-	 private $description;
-	 private $id;
 	 private $project_id;
+	 private $description;
+	 private $name;
+	 private $id;
+	 private $date;
 
- function __construct($name, $date, $description, $id, $project_id){
-		 $this->name=$name;
-		 $this->date=$date;
-		 $this->description=$description;
-		 $this->id=$id;
+ function __construct($project_id, $description, $name, $id, $date){
 		 $this->project_id=$project_id;
+		 $this->description=$description;
+		 $this->name=$name;
+		 $this->id=$id;
+		 $this->date=$date;
 	}
  
 	public static function get($object){
 		if(property_exists($object, "Sprint")){
 			$object = $object->Sprint;
 		}
-		return new Sprint ($object->name, $object->date, $object->description, $object->id, $object->project_id);
+		return new Sprint ($object->project_id, $object->description, $object->name, $object->id, $object->date);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
 
-	 public function getName() {
-		 return $this->name;
+	 public function getProject_id() {
+		 return $this->project_id;
 	 }
 
-	 public function setName($name){
-		$this->name = $name;
-	}
-
-	 public function getDate() {
-		 return $this->date;
-	 }
-
-	 public function setDate($date){
-		$this->date = $date;
+	 public function setProject_id($project_id){
+		$this->project_id = $project_id;
 	}
 
 	 public function getDescription() {
@@ -48,6 +40,14 @@
 		$this->description = $description;
 	}
 
+	 public function getName() {
+		 return $this->name;
+	 }
+
+	 public function setName($name){
+		$this->name = $name;
+	}
+
 	 public function getId() {
 		 return $this->id;
 	 }
@@ -56,12 +56,12 @@
 		$this->id = $id;
 	}
 
-	 public function getProject_id() {
-		 return $this->project_id;
+	 public function getDate() {
+		 return $this->date;
 	 }
 
-	 public function setProject_id($project_id){
-		$this->project_id = $project_id;
+	 public function setDate($date){
+		$this->date = $date;
 	}
 	// </editor-fold>
 
@@ -70,38 +70,38 @@
 	 public static function create($Sprint){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $name = $mysql->checkVariable($Sprint->getName());
-		 $date = $mysql->checkVariable($Sprint->getDate());
-		 $description = $mysql->checkVariable($Sprint->getDescription());
-		 $id = $mysql->checkVariable($Sprint->getId());
 		 $project_id = $mysql->checkVariable($Sprint->getProject_id());
+		 $description = $mysql->checkVariable($Sprint->getDescription());
+		 $name = $mysql->checkVariable($Sprint->getName());
+		 $id = $mysql->checkVariable($Sprint->getId());
+		 $date = $mysql->checkVariable($Sprint->getDate());
 		return $mysql->insert(
-				 " INSERT INTO `sprint` (`name`,`date`,`description`,`id`,`project_id`) VALUES ('$name','$date','$description','$id','$project_id')"
+				 " INSERT INTO `sprint` (`project_id`,`description`,`name`,`id`,`date`) VALUES ('$project_id','$description','$name','$id','$date')"
 		);
 	}
 
 	 public static function modify($Sprint){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $name = $mysql->checkVariable($Sprint->getName());
-		 $date = $mysql->checkVariable($Sprint->getDate());
-		 $description = $mysql->checkVariable($Sprint->getDescription());
-		 $id = $mysql->checkVariable($Sprint->getId());
 		 $project_id = $mysql->checkVariable($Sprint->getProject_id());
+		 $description = $mysql->checkVariable($Sprint->getDescription());
+		 $name = $mysql->checkVariable($Sprint->getName());
+		 $id = $mysql->checkVariable($Sprint->getId());
+		 $date = $mysql->checkVariable($Sprint->getDate());
 		 return $mysql->update(
-				"UPDATE `sprint` SET`name`='$name',`date`='$date',`description`='$description' WHERE `id` = '$id' AND `project_id` = '$project_id' " 
+				"UPDATE `sprint` SET`description`='$description',`name`='$name',`date`='$date' WHERE `project_id` = '$project_id' AND `id` = '$id' " 
 		);
 	}
 
 	public static function delete($Sprint){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $name = $mysql->checkVariable($Sprint->getName());
-		 $date = $mysql->checkVariable($Sprint->getDate());
-		 $description = $mysql->checkVariable($Sprint->getDescription());
-		 $id = $mysql->checkVariable($Sprint->getId());
 		 $project_id = $mysql->checkVariable($Sprint->getProject_id());
-		 return $mysql->delete("DELETE FROM `sprint` WHERE `id` = '$id' AND `project_id` = '$project_id' LIMIT 1"
+		 $description = $mysql->checkVariable($Sprint->getDescription());
+		 $name = $mysql->checkVariable($Sprint->getName());
+		 $id = $mysql->checkVariable($Sprint->getId());
+		 $date = $mysql->checkVariable($Sprint->getDate());
+		 return $mysql->delete("DELETE FROM `sprint` WHERE `project_id` = '$project_id' AND `id` = '$id' LIMIT 1"
 		);
 	}
 
@@ -141,11 +141,11 @@
 
 	public function toArray() {
 		return array(
-			'name' => $this->getName(),
-			'date' => $this->getDate(),
+			'project_id' => $this->getProject_id(),
 			'description' => $this->getDescription(),
+			'name' => $this->getName(),
 			'id' => $this->getId(),
-			'project_id' => $this->getProject_id()
+			'date' => $this->getDate()
 		 );
 	}
 }

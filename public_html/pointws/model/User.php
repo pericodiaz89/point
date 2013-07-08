@@ -1,35 +1,35 @@
 <?php 
  class User {
 
-	 private $email;
-	 private $name;
 	 private $id;
+	 private $name;
 	 private $password;
 	 private $username;
+	 private $email;
 
- function __construct($email, $name, $id, $password, $username){
-		 $this->email=$email;
-		 $this->name=$name;
+ function __construct($id, $name, $password, $username, $email){
 		 $this->id=$id;
+		 $this->name=$name;
 		 $this->password=$password;
 		 $this->username=$username;
+		 $this->email=$email;
 	}
  
 	public static function get($object){
 		if(property_exists($object, "User")){
 			$object = $object->User;
 		}
-		return new User ($object->email, $object->name, $object->id, $object->password, $object->username);
+		return new User ($object->id, $object->name, $object->password, $object->username, $object->email);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
 
-	 public function getEmail() {
-		 return $this->email;
+	 public function getId() {
+		 return $this->id;
 	 }
 
-	 public function setEmail($email){
-		$this->email = $email;
+	 public function setId($id){
+		$this->id = $id;
 	}
 
 	 public function getName() {
@@ -38,14 +38,6 @@
 
 	 public function setName($name){
 		$this->name = $name;
-	}
-
-	 public function getId() {
-		 return $this->id;
-	 }
-
-	 public function setId($id){
-		$this->id = $id;
 	}
 
 	 public function getPassword() {
@@ -63,6 +55,14 @@
 	 public function setUsername($username){
 		$this->username = $username;
 	}
+
+	 public function getEmail() {
+		 return $this->email;
+	 }
+
+	 public function setEmail($email){
+		$this->email = $email;
+	}
 	// </editor-fold>
 
  // <editor-fold defaultstate="collapsed" desc="CRUD">
@@ -70,37 +70,37 @@
 	 public static function create($User){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $email = $mysql->checkVariable($User->getEmail());
-		 $name = $mysql->checkVariable($User->getName());
 		 $id = $mysql->checkVariable($User->getId());
+		 $name = $mysql->checkVariable($User->getName());
 		 $password = $mysql->checkVariable($User->getPassword());
 		 $username = $mysql->checkVariable($User->getUsername());
+		 $email = $mysql->checkVariable($User->getEmail());
 		return $mysql->insert(
-				 " INSERT INTO `user` (`email`,`name`,`id`,`password`,`username`) VALUES ('$email','$name','$id','$password','$username')"
+				 " INSERT INTO `user` (`id`,`name`,`password`,`username`,`email`) VALUES ('$id','$name','$password','$username','$email')"
 		);
 	}
 
 	 public static function modify($User){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $email = $mysql->checkVariable($User->getEmail());
-		 $name = $mysql->checkVariable($User->getName());
 		 $id = $mysql->checkVariable($User->getId());
+		 $name = $mysql->checkVariable($User->getName());
 		 $password = $mysql->checkVariable($User->getPassword());
 		 $username = $mysql->checkVariable($User->getUsername());
+		 $email = $mysql->checkVariable($User->getEmail());
 		 return $mysql->update(
-				"UPDATE `user` SET`email`='$email',`name`='$name',`password`='$password',`username`='$username' WHERE `id` = '$id' " 
+				"UPDATE `user` SET`name`='$name',`password`='$password',`username`='$username',`email`='$email' WHERE `id` = '$id' " 
 		);
 	}
 
 	public static function delete($User){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $email = $mysql->checkVariable($User->getEmail());
-		 $name = $mysql->checkVariable($User->getName());
 		 $id = $mysql->checkVariable($User->getId());
+		 $name = $mysql->checkVariable($User->getName());
 		 $password = $mysql->checkVariable($User->getPassword());
 		 $username = $mysql->checkVariable($User->getUsername());
+		 $email = $mysql->checkVariable($User->getEmail());
 		 return $mysql->delete("DELETE FROM `user` WHERE `id` = '$id' LIMIT 1"
 		);
 	}
@@ -141,11 +141,11 @@
 
 	public function toArray() {
 		return array(
-			'email' => $this->getEmail(),
-			'name' => $this->getName(),
 			'id' => $this->getId(),
+			'name' => $this->getName(),
 			'password' => $this->getPassword(),
-			'username' => $this->getUsername()
+			'username' => $this->getUsername(),
+			'email' => $this->getEmail()
 		 );
 	}
 }
