@@ -28,4 +28,14 @@ function generateTable(table, args){
     return h;
 }
 
+function generateRow(args){
+    
+    var h = "<tr id=\"" + args[0] + "\">";
+    for(var i = 1; i < args.length; i++){
+        h += " <td>" + args[i] + "</td>";   
+    }
+    h += "</tr>";
+    return h;
+}
+
 
