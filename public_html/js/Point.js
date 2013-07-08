@@ -1,5 +1,5 @@
  // <editor-fold defaultstate="collapsed" desc="Dictionary">
-var urlbase = 'pointws/services';// Webservice Base
+var urlbase = '';// Webservice Base
 var Projects =  new Array();
 var Components =  new Array();
 var Componentchilds =  new Array();
@@ -17,7 +17,8 @@ var Comments =  new Array();
 function Project (id,name){
 	this.id = id;
 	this.name = name;
-	this.create = function() {
+	this.create = function(callback) {
+	this.createCallBack = callback;
 		var params = {command: "create", Project: JSON.stringify(this)};
 		callService(urlbase + "/ProjectService.php", params, "register", this);
 	};
@@ -33,6 +34,7 @@ function Project (id,name){
 	this.register = function(data) {
 		this.id = data;
 		Projects[this.id] = this;
+		this.createCallBack(this);
 	};
 }
 Project.get = function(pages, counts, filter) {
@@ -53,7 +55,8 @@ function Component (project_id,name,id){
 	this.project_id = project_id;
 	this.name = name;
 	this.id = id;
-	this.create = function() {
+	this.create = function(callback) {
+	this.createCallBack = callback;
 		var params = {command: "create", Component: JSON.stringify(this)};
 		callService(urlbase + "/ComponentService.php", params, "register", this);
 	};
@@ -69,6 +72,7 @@ function Component (project_id,name,id){
 	this.register = function(data) {
 		this.id = data;
 		Components[this.id] = this;
+		this.createCallBack(this);
 	};
 }
 Component.get = function(pages, counts, filter) {
@@ -88,7 +92,8 @@ Component.init = function(data) {
 function Componentchild (parent,child){
 	this.parent = parent;
 	this.child = child;
-	this.create = function() {
+	this.create = function(callback) {
+	this.createCallBack = callback;
 		var params = {command: "create", Componentchild: JSON.stringify(this)};
 		callService(urlbase + "/ComponentchildService.php", params, "register", this);
 	};
@@ -104,6 +109,7 @@ function Componentchild (parent,child){
 	this.register = function(data) {
 		this.id = data;
 		Componentchilds[this.id] = this;
+		this.createCallBack(this);
 	};
 }
 Componentchild.get = function(pages, counts, filter) {
@@ -126,7 +132,8 @@ function User (id,name,password,username,email){
 	this.password = password;
 	this.username = username;
 	this.email = email;
-	this.create = function() {
+	this.create = function(callback) {
+	this.createCallBack = callback;
 		var params = {command: "create", User: JSON.stringify(this)};
 		callService(urlbase + "/UserService.php", params, "register", this);
 	};
@@ -142,6 +149,7 @@ function User (id,name,password,username,email){
 	this.register = function(data) {
 		this.id = data;
 		Users[this.id] = this;
+		this.createCallBack(this);
 	};
 }
 User.get = function(pages, counts, filter) {
@@ -161,7 +169,8 @@ User.init = function(data) {
 function Task_state (name,id){
 	this.name = name;
 	this.id = id;
-	this.create = function() {
+	this.create = function(callback) {
+	this.createCallBack = callback;
 		var params = {command: "create", Task_state: JSON.stringify(this)};
 		callService(urlbase + "/Task_stateService.php", params, "register", this);
 	};
@@ -177,6 +186,7 @@ function Task_state (name,id){
 	this.register = function(data) {
 		this.id = data;
 		Task_states[this.id] = this;
+		this.createCallBack(this);
 	};
 }
 Task_state.get = function(pages, counts, filter) {
@@ -204,7 +214,8 @@ function Task (user_id,id,sprint_id,component_id,points,project_id,department_id
 	this.name = name;
 	this.description = description;
 	this.state_id = state_id;
-	this.create = function() {
+	this.create = function(callback) {
+	this.createCallBack = callback;
 		var params = {command: "create", Task: JSON.stringify(this)};
 		callService(urlbase + "/TaskService.php", params, "register", this);
 	};
@@ -220,6 +231,7 @@ function Task (user_id,id,sprint_id,component_id,points,project_id,department_id
 	this.register = function(data) {
 		this.id = data;
 		Tasks[this.id] = this;
+		this.createCallBack(this);
 	};
 }
 Task.get = function(pages, counts, filter) {
@@ -242,7 +254,8 @@ function Sprint (project_id,description,name,id,date){
 	this.name = name;
 	this.id = id;
 	this.date = date;
-	this.create = function() {
+	this.create = function(callback) {
+	this.createCallBack = callback;
 		var params = {command: "create", Sprint: JSON.stringify(this)};
 		callService(urlbase + "/SprintService.php", params, "register", this);
 	};
@@ -258,6 +271,7 @@ function Sprint (project_id,description,name,id,date){
 	this.register = function(data) {
 		this.id = data;
 		Sprints[this.id] = this;
+		this.createCallBack(this);
 	};
 }
 Sprint.get = function(pages, counts, filter) {
@@ -277,7 +291,8 @@ Sprint.init = function(data) {
 function Department (id,name){
 	this.id = id;
 	this.name = name;
-	this.create = function() {
+	this.create = function(callback) {
+	this.createCallBack = callback;
 		var params = {command: "create", Department: JSON.stringify(this)};
 		callService(urlbase + "/DepartmentService.php", params, "register", this);
 	};
@@ -293,6 +308,7 @@ function Department (id,name){
 	this.register = function(data) {
 		this.id = data;
 		Departments[this.id] = this;
+		this.createCallBack(this);
 	};
 }
 Department.get = function(pages, counts, filter) {
@@ -315,7 +331,8 @@ function Comment (comment,task_id,id,time,user_id){
 	this.id = id;
 	this.time = time;
 	this.user_id = user_id;
-	this.create = function() {
+	this.create = function(callback) {
+	this.createCallBack = callback;
 		var params = {command: "create", Comment: JSON.stringify(this)};
 		callService(urlbase + "/CommentService.php", params, "register", this);
 	};
@@ -331,6 +348,7 @@ function Comment (comment,task_id,id,time,user_id){
 	this.register = function(data) {
 		this.id = data;
 		Comments[this.id] = this;
+		this.createCallBack(this);
 	};
 }
 Comment.get = function(pages, counts, filter) {
