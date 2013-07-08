@@ -23,21 +23,45 @@ $(document).ready(function() {
         }
         var dep = document.getElementById("sSetDepartment");
         var depVal = dep.options[dep.selectedIndex].value;
-        console.log(depVal);
+//        console.log(depVal);
         var status = document.getElementById("sSetStatus");
         var statusVal =  status.options[status.selectedIndex].value;
-        console.log(statusVal);
+//        console.log(statusVal);
         var user = document.getElementById("sSetUser");
         var userVal = user.options[user.selectedIndex].value;
-        console.log(userVal);
+//        console.log(userVal);
         var comp = document.getElementById("sSetComponent");
         var compVal = comp.options[comp.selectedIndex].value;
-        console.log(compVal);
+//        console.log(compVal);
         var sprint = document.getElementById("sSprint");
         var SprintVal = sprint.options[sprint.selectedIndex].value;;
         
         var newTask = new Task(userVal, "null", SprintVal, compVal, points, project.id, depVal, name, desc, statusVal );
-        newTask.create();
+        newTask.create(function (objetoNuevo){
+            console.log(objetoNuevo);
+            var args = new Array();
+            args[0] = objetoNuevo.id;
+            args[1] = "<input type=\"checkbox\">​";
+            args[2] = objetoNuevo.id;
+            args[3] = objetoNuevo.name;
+            args[4] = objetoNuevo.points;
+            if (objetoNuevo.user_id != "null") {
+                args[5] = Users[objetoNuevo.user_id].name;
+            } else {
+                args[5] = "N/A";
+            }
+            args[6] = Departments[objetoNuevo.department_id].name;
+            if (objetoNuevo.component_id != "null") {
+                console.log (Components[objetoNuevo.component_id])
+                args[7] = Components[objetoNuevo.component_id].name;
+            } else {
+                args[7] = "N/A";
+            }
+            args[8] = Task_states[objetoNuevo.state_id].name;
+            $("#tableTasks").append(generateRow(args))
+            console.log(objetoNuevo);
+        });
+        console.log(newTask);
         
     });
     
@@ -105,7 +129,7 @@ function getFinished(data) {
 
         } else if (element instanceof Department && !initDepartment) {
             if (first) {
-                document.getElementById("sDepartment").innerHTML += "<option value=\"NULL\"> All </option>";
+                document.getElementById("sDepartment").innerHTML += "<option value=\"null\"> All </option>";
                 first = false;
             }
             //$("#sSetDepartment").append("<option>" + element.name + " </option>");

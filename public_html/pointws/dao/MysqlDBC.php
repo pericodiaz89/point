@@ -23,7 +23,7 @@ class MysqlDBC {
     private $password;
     private $name;
 
-    private function __construct($url = 'localhost', $username = 'root', $password = '', $name = 'testws') {
+    private function __construct($url = 'localhost', $username = 'root', $password = '', $name = 'point') {
         $this->url = $url;
         $this->username = $username;
         $this->password = $password;
@@ -97,7 +97,7 @@ class MysqlDBC {
         if ($variable == 'null') {
             return $variable;
         }
-        return mysqli_escape_string($this->connection, "'$variable'");
+        return "'".mysqli_escape_string($this->connection, $variable)."'";
     }
 }
 

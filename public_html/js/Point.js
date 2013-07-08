@@ -204,7 +204,8 @@ function Task (user_id,id,sprint_id,component_id,points,project_id,department_id
 	this.name = name;
 	this.description = description;
 	this.state_id = state_id;
-	this.create = function() {
+	this.create = function(callback) {
+                this.createCallback=callback;
 		var params = {command: "create", Task: JSON.stringify(this)};
 		callService(urlbase + "/TaskService.php", params, "register", this);
 	};
@@ -220,6 +221,7 @@ function Task (user_id,id,sprint_id,component_id,points,project_id,department_id
 	this.register = function(data) {
 		this.id = data;
 		Tasks[this.id] = this;
+                this.createCallback(this);
 	};
 }
 Task.get = function(pages, counts, filter) {
