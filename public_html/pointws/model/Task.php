@@ -10,8 +10,9 @@
 	 private $department_id;
 	 private $name;
 	 private $description;
+	 private $state_id;
 
- function __construct($user_id, $id, $sprint_id, $component_id, $points, $project_id, $department_id, $name, $description){
+ function __construct($user_id, $id, $sprint_id, $component_id, $points, $project_id, $department_id, $name, $description, $state_id){
 		 $this->user_id=$user_id;
 		 $this->id=$id;
 		 $this->sprint_id=$sprint_id;
@@ -21,13 +22,14 @@
 		 $this->department_id=$department_id;
 		 $this->name=$name;
 		 $this->description=$description;
+		 $this->state_id=$state_id;
 	}
  
 	public static function get($object){
 		if(property_exists($object, "Task")){
 			$object = $object->Task;
 		}
-		return new Task ($object->user_id, $object->id, $object->sprint_id, $object->component_id, $object->points, $object->project_id, $object->department_id, $object->name, $object->description);
+		return new Task ($object->user_id, $object->id, $object->sprint_id, $object->component_id, $object->points, $object->project_id, $object->department_id, $object->name, $object->description, $object->state_id);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
@@ -103,6 +105,14 @@
 	 public function setDescription($description){
 		$this->description = $description;
 	}
+
+	 public function getState_id() {
+		 return $this->state_id;
+	 }
+
+	 public function setState_id($state_id){
+		$this->state_id = $state_id;
+	}
 	// </editor-fold>
 
  // <editor-fold defaultstate="collapsed" desc="CRUD">
@@ -119,8 +129,9 @@
 		 $department_id = $mysql->checkVariable($Task->getDepartment_id());
 		 $name = $mysql->checkVariable($Task->getName());
 		 $description = $mysql->checkVariable($Task->getDescription());
+		 $state_id = $mysql->checkVariable($Task->getState_id());
 		return $mysql->insert(
-				 " INSERT INTO `task` (`user_id`,`id`,`sprint_id`,`component_id`,`points`,`project_id`,`department_id`,`name`,`description`) VALUES ('$user_id','$id','$sprint_id','$component_id','$points','$project_id','$department_id','$name','$description')"
+				 " INSERT INTO `task` (`user_id`,`id`,`sprint_id`,`component_id`,`points`,`project_id`,`department_id`,`name`,`description`,`state_id`) VALUES ('$user_id','$id','$sprint_id','$component_id','$points','$project_id','$department_id','$name','$description','$state_id')"
 		);
 	}
 
@@ -136,8 +147,9 @@
 		 $department_id = $mysql->checkVariable($Task->getDepartment_id());
 		 $name = $mysql->checkVariable($Task->getName());
 		 $description = $mysql->checkVariable($Task->getDescription());
+		 $state_id = $mysql->checkVariable($Task->getState_id());
 		 return $mysql->update(
-				"UPDATE `task` SET`user_id`='$user_id',`sprint_id`='$sprint_id',`component_id`='$component_id',`points`='$points',`department_id`='$department_id',`name`='$name',`description`='$description' WHERE `id` = '$id' AND `project_id` = '$project_id' " 
+				"UPDATE `task` SET`user_id`='$user_id',`sprint_id`='$sprint_id',`component_id`='$component_id',`points`='$points',`department_id`='$department_id',`name`='$name',`description`='$description',`state_id`='$state_id' WHERE `id` = '$id' AND `project_id` = '$project_id' " 
 		);
 	}
 
@@ -153,6 +165,7 @@
 		 $department_id = $mysql->checkVariable($Task->getDepartment_id());
 		 $name = $mysql->checkVariable($Task->getName());
 		 $description = $mysql->checkVariable($Task->getDescription());
+		 $state_id = $mysql->checkVariable($Task->getState_id());
 		 return $mysql->delete("DELETE FROM `task` WHERE `id` = '$id' AND `project_id` = '$project_id' LIMIT 1"
 		);
 	}
@@ -201,7 +214,8 @@
 			'project_id' => $this->getProject_id(),
 			'department_id' => $this->getDepartment_id(),
 			'name' => $this->getName(),
-			'description' => $this->getDescription()
+			'description' => $this->getDescription(),
+			'state_id' => $this->getState_id()
 		 );
 	}
 }
