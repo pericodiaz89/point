@@ -1,5 +1,5 @@
  // <editor-fold defaultstate="collapsed" desc="Dictionary">
-var urlbase = '';// Webservice Base
+var urlbase = 'pointws/services';// Webservice Base
 var Projects =  new Array();
 var Components =  new Array();
 var Componentchilds =  new Array();

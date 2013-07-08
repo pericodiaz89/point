@@ -35,7 +35,7 @@ function checkUser(){
         var u = jQuery.parseJSON(localStorage.getItem('user'));
         user = new User(u.id, u.name, u.password, u.username, u.email);
         var p = jQuery.parseJSON(localStorage.getItem('project'));
-        project = new Project(p.id, p.name);
+        project = new Project( p.id,p.name);
         document.getElementById("lUsername").innerHTML = user.name;
         document.getElementById("projectName").innerHTML = project.name;
         document.getElementById("lcurrentSprint").innerHTML = "Backlog";
@@ -43,6 +43,7 @@ function checkUser(){
         Sprint.get(0,20,{"project_id" : project.id});
         Department.get(0,10);
         User.get(0,10);
+        Component.get(0,0,{"project_id" : project.id});
         Task.get(0,10,{"project_id" : project.id});
     }
 }
@@ -51,6 +52,8 @@ var initSprint = false;
 var initDepartment = false;
 var initUser = false;
 var initTask = false;
+var initComponent = false;
+var initTask_state = false;
 
 function getFinished(data) {
     var tipe;
@@ -107,12 +110,36 @@ function getFinished(data) {
             args[i][2] = element.id;
             args[i][3] = element.name;
             args[i][4] = element.points;
-            args[i][5] = element.user_id;
-            args[i][6] = element.department_id;
-            args[i][7] = element.component_id;
+            if(element.user_id!=null){
+                args[i][5] = Users[element.user_id].name;
+            }else{
+                args[i][5] ="N.A.";
+            }
+            args[i][6] = Departments[element.department_id].name;
+            if(element.component_id!=null){
+                args[i][7] = Components[element.component_id].name;
+            }else{
+                args[i][7] = "N.A.";
+            }
             args[i][8] = "new";
             i++;
         }else if (element instanceof Task){
+            
+        }else if(element instanceof Component && !initComponent){
+            if(first){
+               document.getElementById("sComponent").innerHTML = "<option> All </option>";
+               first = false;
+            }
+            document.getElementById("sComponent").innerHTML += "<option>"+element.name+"</option>";
+        }else if(element instanceof Component){
+            
+        }else if(element instanceof Task_state && initTask_state){
+            if(first){
+               document.getElementById("sStatus").innerHTML = "<option> All </option>";
+               first = false;
+            }
+            document.getElementById("sStatus").innerHTML = "<option>"+element.name+"</option>";
+        }else if(element instanceof Task_state){
             
         }
     });
@@ -124,8 +151,9 @@ function getFinished(data) {
          initDepartment = true;
      }else if (tipe instanceof User && !initUser){
          initUser = true;
-     }
-    if(tipe instanceof Task){
+     }else if(tipe instanceof Task){
         document.getElementById("tableTasks").innerHTML = generateTable(table, args);
-    }
+     } else if (tipe instanceof Component && !initComponent){
+         intitComponent = true;
+     }
 }
