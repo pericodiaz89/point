@@ -193,7 +193,7 @@ Task_state.init = function(data) {
 // <editor-fold defaultstate="collapsed" desc="Task">
 //Task
 
-function Task (user_id,id,sprint_id,component_id,points,project_id,department_id,name,description){
+function Task (user_id,id,sprint_id,component_id,points,project_id,department_id,name,description,state_id){
 	this.user_id = user_id;
 	this.id = id;
 	this.sprint_id = sprint_id;
@@ -203,6 +203,7 @@ function Task (user_id,id,sprint_id,component_id,points,project_id,department_id
 	this.department_id = department_id;
 	this.name = name;
 	this.description = description;
+	this.state_id = state_id;
 	this.create = function() {
 		var params = {command: "create", Task: JSON.stringify(this)};
 		callService(urlbase + "/TaskService.php", params, "register", this);
@@ -227,7 +228,7 @@ Task.get = function(pages, counts, filter) {
 };
 Task.init = function(data) {
 	for (var i = 0; i < data.length; i++) {
-		Tasks[data[i].id] = new Task(data[i].user_id,data[i].id,data[i].sprint_id,data[i].component_id,data[i].points,data[i].project_id,data[i].department_id,data[i].name,data[i].description);
+		Tasks[data[i].id] = new Task(data[i].user_id,data[i].id,data[i].sprint_id,data[i].component_id,data[i].points,data[i].project_id,data[i].department_id,data[i].name,data[i].description,data[i].state_id);
 	}
 	getFinished(Tasks);
 };
