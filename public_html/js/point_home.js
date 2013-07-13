@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -22,8 +22,9 @@ function checkUser(){
          window.top.location.href = 'index.html';
     }else{
         var u = jQuery.parseJSON(localStorage.getItem('user'));
+        console.log(u);
         user = new User(u.id, u.name, u.password, u.username, u.email);
-        User (id,name,password,username,email)
+//        User (id,name,password,username,email);
         document.getElementById("lUsername").innerHTML = user.name;
         Project.get(0,20);
     }

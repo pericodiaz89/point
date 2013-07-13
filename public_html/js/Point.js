@@ -1,5 +1,5 @@
  // <editor-fold defaultstate="collapsed" desc="Dictionary">
-var urlbase = '';// Webservice Base
+var urlbase = 'pointws/services';// Webservice Base
 var Projects =  new Array();
 var Components =  new Array();
 var Componentchilds =  new Array();
@@ -10,7 +10,7 @@ var Sprints =  new Array();
 var Departments =  new Array();
 var Comments =  new Array();
 // </editor-fold>
- // <editor-fold defaultstate="collapsed" desc="Model"> 
+ // <editor-fold defaultstate="collapsed" desc="Model">
 // <editor-fold defaultstate="collapsed" desc="Project">
 //Project
 
@@ -47,7 +47,7 @@ Project.init = function(data) {
 	}
 	getFinished(Projects);
 };
-// </editor-fold> 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Component">
 //Component
 
@@ -85,7 +85,7 @@ Component.init = function(data) {
 	}
 	getFinished(Components);
 };
-// </editor-fold> 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Componentchild">
 //Componentchild
 
@@ -122,7 +122,7 @@ Componentchild.init = function(data) {
 	}
 	getFinished(Componentchilds);
 };
-// </editor-fold> 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="User">
 //User
 
@@ -162,7 +162,7 @@ User.init = function(data) {
 	}
 	getFinished(Users);
 };
-// </editor-fold> 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Task_state">
 //Task_state
 
@@ -199,7 +199,7 @@ Task_state.init = function(data) {
 	}
 	getFinished(Task_states);
 };
-// </editor-fold> 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Task">
 //Task
 
@@ -244,7 +244,7 @@ Task.init = function(data) {
 	}
 	getFinished(Tasks);
 };
-// </editor-fold> 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Sprint">
 //Sprint
 
@@ -284,7 +284,7 @@ Sprint.init = function(data) {
 	}
 	getFinished(Sprints);
 };
-// </editor-fold> 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Department">
 //Department
 
@@ -321,7 +321,7 @@ Department.init = function(data) {
 	}
 	getFinished(Departments);
 };
-// </editor-fold> 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Comment">
 //Comment
 
