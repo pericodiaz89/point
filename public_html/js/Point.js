@@ -37,15 +37,21 @@ function Project (id,name){
 		this.createCallBack(this);
 	};
 }
-Project.get = function(pages, counts, filter) {
+Project.get = function(pages, counts, filter,callback) {
+	Project.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter)};
 	callService(urlbase + "/ProjectService.php", params, "Project.init", null);
 };
 Project.init = function(data) {
-	for (var i = 0; i < data.length; i++) {
-		Projects[data[i].id] = new Project(data[i].id,data[i].name);
+	var newValues = new Array();
+	for (var i = 0; i < data.length; i++) {var p = new Project(data[i].id,data[i].name);
+		Projects[data[i].id] = p;
+		newValues[i] = p;
 	}
-	getFinished(Projects);
+	if (Project.getCallBack != undefined) {
+		Project.getCallBack(newValues);
+
+	}
 };
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Component">
@@ -75,15 +81,21 @@ function Component (project_id,name,id){
 		this.createCallBack(this);
 	};
 }
-Component.get = function(pages, counts, filter) {
+Component.get = function(pages, counts, filter,callback) {
+	Component.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter)};
 	callService(urlbase + "/ComponentService.php", params, "Component.init", null);
 };
 Component.init = function(data) {
-	for (var i = 0; i < data.length; i++) {
-		Components[data[i].id] = new Component(data[i].project_id,data[i].name,data[i].id);
+	var newValues = new Array();
+	for (var i = 0; i < data.length; i++) {var p = new Component(data[i].project_id,data[i].name,data[i].id);
+		Components[data[i].id] = p;
+		newValues[i] = p;
 	}
-	getFinished(Components);
+	if (Component.getCallBack != undefined) {
+		Component.getCallBack(newValues);
+
+	}
 };
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Componentchild">
@@ -112,15 +124,21 @@ function Componentchild (parent,child){
 		this.createCallBack(this);
 	};
 }
-Componentchild.get = function(pages, counts, filter) {
+Componentchild.get = function(pages, counts, filter,callback) {
+	Componentchild.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter)};
 	callService(urlbase + "/ComponentchildService.php", params, "Componentchild.init", null);
 };
 Componentchild.init = function(data) {
-	for (var i = 0; i < data.length; i++) {
-		Componentchilds[data[i].id] = new Componentchild(data[i].parent,data[i].child);
+	var newValues = new Array();
+	for (var i = 0; i < data.length; i++) {var p = new Componentchild(data[i].parent,data[i].child);
+		Componentchilds[data[i].id] = p;
+		newValues[i] = p;
 	}
-	getFinished(Componentchilds);
+	if (Componentchild.getCallBack != undefined) {
+		Componentchild.getCallBack(newValues);
+
+	}
 };
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="User">
@@ -152,15 +170,21 @@ function User (id,name,password,username,email){
 		this.createCallBack(this);
 	};
 }
-User.get = function(pages, counts, filter) {
+User.get = function(pages, counts, filter,callback) {
+	User.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter)};
 	callService(urlbase + "/UserService.php", params, "User.init", null);
 };
 User.init = function(data) {
-	for (var i = 0; i < data.length; i++) {
-		Users[data[i].id] = new User(data[i].id,data[i].name,data[i].password,data[i].username,data[i].email);
+	var newValues = new Array();
+	for (var i = 0; i < data.length; i++) {var p = new User(data[i].id,data[i].name,data[i].password,data[i].username,data[i].email);
+		Users[data[i].id] = p;
+		newValues[i] = p;
 	}
-	getFinished(Users);
+	if (User.getCallBack != undefined) {
+		User.getCallBack(newValues);
+
+	}
 };
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Task_state">
@@ -189,15 +213,21 @@ function Task_state (name,id){
 		this.createCallBack(this);
 	};
 }
-Task_state.get = function(pages, counts, filter) {
+Task_state.get = function(pages, counts, filter,callback) {
+	Task_state.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter)};
 	callService(urlbase + "/Task_stateService.php", params, "Task_state.init", null);
 };
 Task_state.init = function(data) {
-	for (var i = 0; i < data.length; i++) {
-		Task_states[data[i].id] = new Task_state(data[i].name,data[i].id);
+	var newValues = new Array();
+	for (var i = 0; i < data.length; i++) {var p = new Task_state(data[i].name,data[i].id);
+		Task_states[data[i].id] = p;
+		newValues[i] = p;
 	}
-	getFinished(Task_states);
+	if (Task_state.getCallBack != undefined) {
+		Task_state.getCallBack(newValues);
+
+	}
 };
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Task">
@@ -234,15 +264,21 @@ function Task (user_id,id,sprint_id,component_id,points,project_id,department_id
 		this.createCallBack(this);
 	};
 }
-Task.get = function(pages, counts, filter) {
+Task.get = function(pages, counts, filter,callback) {
+	Task.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter)};
 	callService(urlbase + "/TaskService.php", params, "Task.init", null);
 };
 Task.init = function(data) {
-	for (var i = 0; i < data.length; i++) {
-		Tasks[data[i].id] = new Task(data[i].user_id,data[i].id,data[i].sprint_id,data[i].component_id,data[i].points,data[i].project_id,data[i].department_id,data[i].name,data[i].description,data[i].state_id);
+	var newValues = new Array();
+	for (var i = 0; i < data.length; i++) {var p = new Task(data[i].user_id,data[i].id,data[i].sprint_id,data[i].component_id,data[i].points,data[i].project_id,data[i].department_id,data[i].name,data[i].description,data[i].state_id);
+		Tasks[data[i].id] = p;
+		newValues[i] = p;
 	}
-	getFinished(Tasks);
+	if (Task.getCallBack != undefined) {
+		Task.getCallBack(newValues);
+
+	}
 };
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Sprint">
@@ -274,15 +310,21 @@ function Sprint (project_id,description,name,id,date){
 		this.createCallBack(this);
 	};
 }
-Sprint.get = function(pages, counts, filter) {
+Sprint.get = function(pages, counts, filter,callback) {
+	Sprint.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter)};
 	callService(urlbase + "/SprintService.php", params, "Sprint.init", null);
 };
 Sprint.init = function(data) {
-	for (var i = 0; i < data.length; i++) {
-		Sprints[data[i].id] = new Sprint(data[i].project_id,data[i].description,data[i].name,data[i].id,data[i].date);
+	var newValues = new Array();
+	for (var i = 0; i < data.length; i++) {var p = new Sprint(data[i].project_id,data[i].description,data[i].name,data[i].id,data[i].date);
+		Sprints[data[i].id] = p;
+		newValues[i] = p;
 	}
-	getFinished(Sprints);
+	if (Sprint.getCallBack != undefined) {
+		Sprint.getCallBack(newValues);
+
+	}
 };
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Department">
@@ -311,15 +353,21 @@ function Department (id,name){
 		this.createCallBack(this);
 	};
 }
-Department.get = function(pages, counts, filter) {
+Department.get = function(pages, counts, filter,callback) {
+	Department.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter)};
 	callService(urlbase + "/DepartmentService.php", params, "Department.init", null);
 };
 Department.init = function(data) {
-	for (var i = 0; i < data.length; i++) {
-		Departments[data[i].id] = new Department(data[i].id,data[i].name);
+	var newValues = new Array();
+	for (var i = 0; i < data.length; i++) {var p = new Department(data[i].id,data[i].name);
+		Departments[data[i].id] = p;
+		newValues[i] = p;
 	}
-	getFinished(Departments);
+	if (Department.getCallBack != undefined) {
+		Department.getCallBack(newValues);
+
+	}
 };
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Comment">
@@ -351,15 +399,21 @@ function Comment (comment,task_id,id,time,user_id){
 		this.createCallBack(this);
 	};
 }
-Comment.get = function(pages, counts, filter) {
+Comment.get = function(pages, counts, filter,callback) {
+	Comment.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter)};
 	callService(urlbase + "/CommentService.php", params, "Comment.init", null);
 };
 Comment.init = function(data) {
-	for (var i = 0; i < data.length; i++) {
-		Comments[data[i].id] = new Comment(data[i].comment,data[i].task_id,data[i].id,data[i].time,data[i].user_id);
+	var newValues = new Array();
+	for (var i = 0; i < data.length; i++) {var p = new Comment(data[i].comment,data[i].task_id,data[i].id,data[i].time,data[i].user_id);
+		Comments[data[i].id] = p;
+		newValues[i] = p;
 	}
-	getFinished(Comments);
+	if (Comment.getCallBack != undefined) {
+		Comment.getCallBack(newValues);
+
+	}
 };
 // </editor-fold>
 // </editor-fold>

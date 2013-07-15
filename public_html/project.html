@@ -9,7 +9,6 @@
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap-responsive.css" rel="stylesheet">
         <link href="css/point.css" rel="stylesheet">
-
     </head>
 
     <body>
@@ -41,88 +40,37 @@
                     <div class="control-group text-center">
                         <h3 id="lcurrentSprint" class="control-label "></h3>
                         <select id="sSprint" class="controls cbSprints">
-<!--                        <option>Sprint de caminar</option>
-                            <option>Sprint de enemigo</option>
-                            <option>Sprint de pelea</option>-->
                         </select>
                         <button id="bNewSprint" class="btn btn-small btn-success" >New Sprint</button>
                     </div>
                 </div>
-                <form class="form-horizontal text-center">
+                <div class="form-horizontal text-center">
                     <div class="control-group">
                         <label class="label">Department</label>
                         <select id="sDepartment">
-<!--                        <option>All</option>
-                            <option>Programming</option>
-                            <option>Art</option>
-                            <option>Administration</option>
-                            <option>Game Design</option>-->
                         </select>
                         <label class="label">Status</label>
                         <select id="sStatus" >
-<!--                            <option>New</option>
-                            <option>Assigned</option>
-                            <option>Testing</option>
-                            <option>Closed</option>
-                            <option>Invalid</option>-->
                         </select>
                         <label class="label">User</label>
                         <select id="sUser">
-<!--                        <option>rdiazbe (Rodrigo Diaz Bermudez)</option>
-                            <option>mateoc</option>-->
                         </select>
                         <label  class="label">Component</label>
                         <select id="sComponent">
-<!--                            <option>Bugs</option>
-                            <option>Buildings</option>-->
                         </select>
                     </div>
-                </form>
+                    <button id="bUpdateSearch" class="btn btn-block btn-info" >Update Search</button>
+                </div>
                 <h3 class="text-center">Task List</h3>
                 <table id="tableTasks" class="table row-fluid table-hover table-bordered success">
-<!--                    <tr>
-                        <th>&#x2713;</th>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Points</th>
-                        <th>User</th>
-                        <th>Department</th>
-                        <th>Component</th>
-                        <th>Status</th>
-                    </tr>
-
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>1</td>
-                        <td>Bug Invaders</td>
-                        <td>2</td>
-                        <td>rdiazbe</td>
-                        <td>Programming</td>
-                        <td>N/A</td>
-                        <td>New</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox"></td>
-                        <td>2</td>
-                        <td>Planet Defense</td>
-                        <td>3</td>
-                        <td>rdiazbe</td>
-                        <td>Programming</td>
-                        <td>N/A</td>
-                        <td>New</td>
-                    </tr>-->
                 </table>
                 <p><button id="bCreateTask" class="btn-success row-fluid ">Create New Task</button></p>
                 <div  class="form-horizontal">
                     <label class="control-label margin-right-5">To Selected Tasks: </label>
                     <select id="sSprintChange">
-<!--                        <option>Sprint de caminar</option>
-                        <option>Sprint de enemigo</option>
-                        <option>Sprint de pelea</option>-->
                     </select>
                     <button class="btn-danger">Send to Sprint</button>
                 </div>
-
             </div>
             <hr>
 
@@ -160,19 +108,9 @@
                         <tr>
                             <td><label class="label">Department</label>
                                 <select id="sSetDepartment" class="modal-select">
-<!--                                    <option>All</option>
-                                    <option>Programming</option>
-                                    <option>Art</option>
-                                    <option>Administration</option>
-                                    <option>Game Design</option>-->
                                 </select></td>
                                 <td><label class="label">Status</label>
                                     <select id ="sSetStatus" class="modal-select">
-<!--                                        <option>New</option>
-                                        <option>Assigned</option>
-                                        <option>Testing</option>
-                                        <option>Closed</option>
-                                        <option>Invalid</option>-->
                                     </select>
                                 </td>
                         </tr>
@@ -180,15 +118,11 @@
                             <td>
                                 <label class="label">User</label>
                                 <select id="sSetUser" class="modal-select">
-<!--                                    <option>rdiazbe</option>
-                                    <option>mateoc</option>-->
                                 </select>
                             </td>
                             <td><label class="label">Component</label>
                                 <select id="sSetComponent" class="modal-select">
                                     <option value="null">N.A.</option>
-<!--                                    <option>Bugs</option>
-                                    <option>Buildings</option>-->
                                 </select>
                             </td>
                         </tr>
@@ -197,7 +131,7 @@
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn btn-danger">Cancel</a>
-                <a id="bCrateTask" href="#" class="btn btn-primary">Create Task</a>
+                <a id="bCreateNewTask" href="#" class="btn btn-primary">Create Task</a>
             </div>
         </div>
 

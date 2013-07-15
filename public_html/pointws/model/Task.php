@@ -1,4 +1,4 @@
-<?php 
+<?php
  class Task {
 
 	 private $user_id;
@@ -24,7 +24,7 @@
 		 $this->description=$description;
 		 $this->state_id=$state_id;
 	}
- 
+
 	public static function get($object){
 		if(property_exists($object, "Task")){
 			$object = $object->Task;
@@ -119,7 +119,7 @@
 
 	 public static function create($Task){
 		$mysql = MysqlDBC::getInstance();
-		
+
 		 $user_id = $mysql->checkVariable($Task->getUser_id());
 		 $id = $mysql->checkVariable($Task->getId());
 		 $sprint_id = $mysql->checkVariable($Task->getSprint_id());
@@ -137,7 +137,7 @@
 
 	 public static function modify($Task){
 		$mysql = MysqlDBC::getInstance();
-		
+
 		 $user_id = $mysql->checkVariable($Task->getUser_id());
 		 $id = $mysql->checkVariable($Task->getId());
 		 $sprint_id = $mysql->checkVariable($Task->getSprint_id());
@@ -149,13 +149,13 @@
 		 $description = $mysql->checkVariable($Task->getDescription());
 		 $state_id = $mysql->checkVariable($Task->getState_id());
 		 return $mysql->update(
-				"UPDATE `task` SET`user_id`=$user_id,`sprint_id`=$sprint_id,`component_id`=$component_id,`points`=$points,`department_id`=$department_id,`name`=$name,`description`=$description,`state_id`=$state_id WHERE `id` = '$id' AND `project_id` = '$project_id' " 
+				"UPDATE `task` SET`user_id`=$user_id,`sprint_id`=$sprint_id,`component_id`=$component_id,`points`=$points,`department_id`=$department_id,`name`=$name,`description`=$description,`state_id`=$state_id WHERE `id` = '$id' AND `project_id` = '$project_id' "
 		);
 	}
 
 	public static function delete($Task){
 		$mysql = MysqlDBC::getInstance();
-		
+
 		 $user_id = $mysql->checkVariable($Task->getUser_id());
 		 $id = $mysql->checkVariable($Task->getId());
 		 $sprint_id = $mysql->checkVariable($Task->getSprint_id());
