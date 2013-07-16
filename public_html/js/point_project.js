@@ -24,17 +24,19 @@ $(document).ready(function() {
     });
 
     $("#bUpdateSearch").click(function() {
-        var filter = {"project_id": project.id, "sprint_id": $("#sSprint").val()};
-        if ($("#sDepartment").val() != "null") {
-            filter["department_id"] = $("#sDepartment").val();
+        refreshTable();
+    });
+
+    $("#bSendToSprint").click(function() {
+        var taskIds = new Array();
+        var table = document.getElementById("tableTasks");
+        for (var i = 1; i < table.rows.length; i++) {
+            if (table.rows[i].cells[0].getElementsByTagName("input")[0].checked) {
+                taskIds.push(table.rows[i].id);
+            }
         }
-        if ($("#sStatus").val() != "null") {
-            filter["state_id"] = $("#sStatus").val();
-        }
-        if ($("#sUser").val() != "null") {
-            filter["user_id"] = $("#sUser").val();
-        }
-        Task.get(0, 0, filter, loadTasks);
+        var params = {"command": "setTasksToSprint", "tasks": JSON.stringify(taskIds), "sprint_id": $("#sSprintChange").val()};
+        callService(urlbase + "/ProjectCtrlService.php", params, "refreshTable", null);
     });
 
     // <editor-fold defaultstate="collapsed" desc="Create New Task">
@@ -87,6 +89,20 @@ $(document).ready(function() {
     // </editor-fold>
 });
 
+function refreshTable() {
+    var filter = {"project_id": project.id, "sprint_id": $("#sSprint").val()};
+    if ($("#sDepartment").val() != "null") {
+        filter["department_id"] = $("#sDepartment").val();
+    }
+    if ($("#sStatus").val() != "null") {
+        filter["state_id"] = $("#sStatus").val();
+    }
+    if ($("#sUser").val() != "null") {
+        filter["user_id"] = $("#sUser").val();
+    }
+    Task.get(0, 0, filter, loadTasks);
+}
+
 function checkUser() {
     if (localStorage.getItem('user') == undefined) {
         window.top.location.href = 'index.html';
@@ -107,6 +123,7 @@ function checkUser() {
     }
 }
 
+// <editor-fold defaultstate="collapsed" desc="Load Entities">
 function loadTask_states(data) {
     var htmlTaskStates = "";
     data.forEach(function(element) {
@@ -181,3 +198,4 @@ function loadTasks(data) {
     });
     $("#tableTasks").html(generateTable(table, args));
 }
+// </editor-fold>

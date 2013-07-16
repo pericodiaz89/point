@@ -12,9 +12,6 @@ class ProjectCtrlService extends Service {
         if (checkParams('tasks', 'sprint_id')) {
             $tasks = json_decode($_REQUEST['tasks']);
             $sprint_id = $_REQUEST['sprint_id'];
-            if ($sprint_id == '0') {
-                $sprint_id = "NULL";
-            }
             $conditional = "";
             $comma = true;
             foreach ($tasks as $task) {
@@ -23,7 +20,7 @@ class ProjectCtrlService extends Service {
                 } else {
                     $comma = false;
                 }
-                $conditional .= " task_id = '$task' ";
+                $conditional .= " id = '$task' ";
             }
             return MysqlDBC::getInstance()->update("UPDATE task SET sprint_id='$sprint_id' WHERE $conditional");
         } else {
