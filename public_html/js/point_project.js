@@ -90,7 +90,8 @@ $(document).ready(function() {
     $("#bUpdateTask").click(function (){
         console.log($("#sStatusUpdate").val());
         Tasks[updateTask].state_id = $("#sStatusUpdate").val();
-        Tasks[updateTask].user_id = $("#sUserUpdate").val()
+        Tasks[updateTask].user_id = $("#sUserUpdate").val();
+        Tasks[updateTask].component_id = "null"//TODO: implement 
         Tasks[updateTask].update(updatecheck());
         //Task_states[Tasks[updateTask].state_id].update();
     });

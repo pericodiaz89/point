@@ -149,7 +149,7 @@
 		 $description = $mysql->checkVariable($Task->getDescription());
 		 $state_id = $mysql->checkVariable($Task->getState_id());
 		 return $mysql->update(
-				"UPDATE `task` SET`user_id`=$user_id,`sprint_id`=$sprint_id,`component_id`=$component_id,`points`=$points,`department_id`=$department_id,`name`=$name,`description`=$description,`state_id`=$state_id WHERE `id` = '$id' AND `project_id` = '$project_id' "
+				"UPDATE `task` SET`user_id`=$user_id,`sprint_id`=$sprint_id,`component_id`=$component_id,`points`=$points,`department_id`=$department_id,`name`=$name,`description`=$description,`state_id`=$state_id WHERE `id` = $id AND `project_id` = $project_id "
 		);
 	}
 
