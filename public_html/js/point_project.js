@@ -1,9 +1,10 @@
 var user;
 var project;
 var sprint;
+var updateTask;
 
 $(document).ready(function() {
-    checkUser();
+    checkUser();                
     $("#bNewSprint").click(function() {
         $("#new_sprint_panel").modal();
     });
@@ -85,7 +86,19 @@ $(document).ready(function() {
         });
     });
     // </editor-fold>
+    
+    $("#bUpdateTask").click(function (){
+        console.log($("#sStatusUpdate").val());
+        Tasks[updateTask].state_id = $("#sStatusUpdate").val();
+        Tasks[updateTask].user_id = $("#sUserUpdate").val()
+        Tasks[updateTask].update(updatecheck());
+        //Task_states[Tasks[updateTask].state_id].update();
+    });
 });
+
+function updatecheck(data){
+    console.log(data);
+}
 
 function checkUser() {
     if (localStorage.getItem('user') == undefined) {
@@ -114,6 +127,7 @@ function loadTask_states(data) {
     });
     $("#sStatus").html("<option value=\"null\"> All </option>" + htmlTaskStates);
     $("#sSetStatus").html(htmlTaskStates);
+    $("#sStatusUpdate").html(htmlTaskStates);
 }
 
 function loadUsers(data) {
@@ -123,6 +137,7 @@ function loadUsers(data) {
     });
     $("#sUser").html("<option value=\"null\"> All </option>" + htmlUsers);
     $("#sSetUser").html("<option value=\"null\"> N/A </option>" + htmlUsers);
+    $("#sUserUpdate").html("<option value=\"null\">N/A</option>" + htmlUsers);
 }
 
 function loadSprints(data) {
@@ -132,7 +147,6 @@ function loadSprints(data) {
     });
     $("#sSprintChange").html(htmlSprints);
     $("#sSprint").html(htmlSprints);
-    console.log($("#sSprint").val());
     Task.get(0, 0, {"project_id": project.id, "sprint_id": $("#sSprint").val()}, loadTasks);
 }
 
@@ -179,5 +193,17 @@ function loadTasks(data) {
         args[i][8] = Task_states[element.state_id].name;
         i++;
     });
-    $("#tableTasks").html(generateTable(table, args));
+    $("#tableTasks").html(generateTableFunction(table, args,"loadSpec"));
 }
+
+function loadSpec(id){
+    $("#task_panel").modal();
+    $("#lInfoName").html("#" + id + " " + $("#Name"+id).html());
+    $("#lLinfoDep").html($("#Department"+id).html())
+    $("#optionsRadios"+$("#Points"+id).html()).click();
+    updateTask = id;
+    //console.log(Task_states[Tasks[id].state_id]);
+    //console.log(Tasks[id])
+    
+}
+
