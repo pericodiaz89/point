@@ -138,9 +138,9 @@
         <div id="task_panel" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="text-center">#1 Description of the task at hand since its a long story</h4>
+                <h4 id="lInfoName" class="text-center">#1 Description of the task at hand since its a long story</h4>
                 <div class="well well-small">Description of the task</div>
-                <label class="label">Department</label> Game Design <label class="label">Component</label> Bugs
+                <label class="label">Department</label> <label id="lLinfoDep"> Game Design</label> <label class="label">Component</label> 
                 <i class="icon-pencil pull-right"></i>
             </div>
             <div class="modal-body">
@@ -148,15 +148,15 @@
                     <div class="text-center">
                         <label class=""><b>Points</b></label>
                         <label class="radio inline">
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" class ="radioUpdateTask">
                             <span class="badge badge-success">1</span>
                         </label>
                         <label class="radio inline">
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="2" class ="radioUpdateTask">
                             <span class="badge badge-warning">2</span>
                         </label>
                         <label class="radio inline">
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="3" class ="radioUpdateTask">
                             <span class="badge badge-important">3</span>
                         </label>
                     </div>
@@ -164,24 +164,17 @@
                         <tr>
                             <td>
                                 <label class="label">User</label>
-                                <select class="modal-select">
-                                    <option>rdiazbe</option>
-                                    <option>mateoc</option>
+                                <select id="sUserUpdate" class="modal-select">
                                 </select>
                             </td>
                             <td><label class="label">Status</label>
-                                <select class="modal-select">
-                                    <option>New</option>
-                                    <option>Assigned</option>
-                                    <option>Testing</option>
-                                    <option>Closed</option>
-                                    <option>Invalid</option>
+                                <select id="sStatusUpdate" class="modal-select">
                                 </select>
                             </td>
                         </tr>
                     </table>
                 </div>
-                <a href="#" class="btn btn-success pull-right">Update Task</a>
+                <a id="bUpdateTask" href="#" class="btn btn-success pull-right">Update Task</a>
             </div>
             <div class="modal-footer">
                 <h4 class="text-center">Comments</h4>

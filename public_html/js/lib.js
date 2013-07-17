@@ -38,4 +38,26 @@ function generateRow(args){
     return h;
 }
 
+function generateTableFunction(table, args, click){
+    var c = new Array();
+    c.length;
+    var h = "<tr>";
+    for(var i = 0; i < table.length; i++){
+        h += "<th>"+ table[i] +"</th>";
+    }
+    h += "</tr>";
+    for(var i = 0; i < args.length; i++){
+         h += "<tr id=\""+args[i][0]+"\">";
+        for (var j = 1; j < args[i].length; j++){
+            if(j!=1){
+                h += "<td id=\""+table[j-1]+args[i][0]+"\" onclick=\""+click+"("+args[i][0]+")\">"+args[i][j]+"</td>";
+            }else{
+                h += "<td>"+args[i][j]+"</td>";
+            }
+        }
+        h += "</tr>";
+    }
+    return h;
+}
+
 
