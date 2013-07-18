@@ -6,8 +6,8 @@
         <meta name="description" content="">
         <meta name="author" content="Digital Emerald Entertainment">
 
-        <link href="css/bootstrap.css" rel="stylesheet">
-        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
         <link href="css/point.css" rel="stylesheet">
     </head>
 
@@ -130,62 +130,68 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-danger">Cancel</a>
-                <a id="bCreateNewTask" href="#" class="btn btn-primary">Create Task</a>
+                <a id="bNewTaskPanelCancel" class="btn btn-danger">Cancel</a>
+                <a id="bCreateNewTask" class="btn btn-primary">Create Task</a>
             </div>
         </div>
 
-        <div id="task_panel" class="modal hide fade">
+        <div id="task_panel" class="modal hide fade in" tabindex="-1" role="dialog">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 id="lInfoName" class="text-center">#1 Description of the task at hand since its a long story</h4>
                 <div class="well well-small">Description of the task</div>
-                <label class="label">Department</label> <label id="lLinfoDep"> Game Design</label> <label class="label">Component</label> 
-                <i class="icon-pencil pull-right"></i>
-            </div>
-            <div class="modal-body">
+                <table class="table-condensed">
+                    <tr>
+                        <td><label class="label">Department</label></td>
+                        <td><label id="lLinfoDep"></label></td>
+                        <td><label class="label">Component</label></td>
+                        <td><label >N/A</label></td>
+                        <td><div class="text-right">
+                                <b>Points</b>
+                                <label class="radio inline">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" class ="radioUpdateTask">
+                                    <span class="badge badge-success">1</span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="2" class ="radioUpdateTask">
+                                    <span class="badge badge-warning">2</span>
+                                </label>
+                                <label class="radio inline">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="3" class ="radioUpdateTask">
+                                    <span class="badge badge-important">3</span>
+                                </label>
+                            </div></td>
+                    </tr>
+
+                </table>
                 <div class="form-inline">
-                    <div class="text-center">
-                        <label class=""><b>Points</b></label>
-                        <label class="radio inline">
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="1" class ="radioUpdateTask">
-                            <span class="badge badge-success">1</span>
-                        </label>
-                        <label class="radio inline">
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="2" class ="radioUpdateTask">
-                            <span class="badge badge-warning">2</span>
-                        </label>
-                        <label class="radio inline">
-                            <input type="radio" name="optionsRadios" id="optionsRadios3" value="3" class ="radioUpdateTask">
-                            <span class="badge badge-important">3</span>
-                        </label>
-                    </div>
                     <table class="row-fluid">
                         <tr>
                             <td>
                                 <label class="label">User</label>
-                                <select id="sUserUpdate" class="modal-select">
+                            </td>
+                            <td>   <select id="sUserUpdate" class="modal-select">
                                 </select>
                             </td>
-                            <td><label class="label">Status</label>
-                                <select id="sStatusUpdate" class="modal-select">
+                            <td><label class="label">Status</label></td>
+                            <td>    <select id="sStatusUpdate" class="modal-select">
                                 </select>
                             </td>
                         </tr>
                     </table>
                 </div>
-                <a id="bUpdateTask" href="#" class="btn btn-success pull-right">Update Task</a>
+                <button id="bUpdateTask" class="btn btn-success">Update Task</button>
             </div>
-            <div class="modal-footer">
+            <div class="modal-body modal-body-short">
                 <h4 class="text-center">Comments</h4>
-                <div class="text-left">
-                    <b>2013-07-01 14:01:05 rdiazbe</b>
-                    Creo que esta aplicacion puede ser muy interesante ya que muestra muchas cosas.
+                <div id="commentList">
                 </div>
                 <hr>
+            </div>
+            <div class="modal-footer">
                 <div class="text-center ">
-                    <input type="text" placeholder="New Comment" class="comment">
-                    <a class="btn btn-inverse" href="#">Comment</a>
+                    <input id="tNewComment" type="text" placeholder="New Comment" class="comment">
+                    <button type="button" data-loading-text="Loading..." id="bNewComment" class="btn btn-inverse btn-primary" >Comment</button>
                 </div>
             </div>
         </div>
@@ -204,7 +210,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-danger">Cancel</a>
+                <a id="bSprintPanelCancel" class="btn btn-danger">Cancel</a>
                 <a id="createSprint" href="#" class="btn btn-primary">Create Sprint</a>
             </div>
         </div>

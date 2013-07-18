@@ -41,6 +41,10 @@ form select{
     width: 100%
 }
 
+.modal-body-short{
+    max-height: 200px;
+}
+
 body {
     padding-top: 40px;
     padding-bottom: 40px;

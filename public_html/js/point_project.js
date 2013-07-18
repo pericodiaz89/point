@@ -4,7 +4,18 @@ var sprint;
 var updateTask;
 
 $(document).ready(function() {
-    checkUser();                
+    checkUser();
+
+    // <editor-fold defaultstate="collapsed" desc="Events">
+
+    $("#sSprint").change(function() {
+        sprint = Sprints[$(this).val()];
+        Tasks = [];
+        Task.get(0, 0, {"project_id": project.id, "sprint_id": $("#sSprint").val()}, loadTasks);
+    });
+
+    // <editor-fold defaultstate="collapsed" desc="Clicks">
+
     $("#bNewSprint").click(function() {
         $("#new_sprint_panel").modal();
     });
@@ -19,9 +30,14 @@ $(document).ready(function() {
         });
     });
 
-    $("#sSprint").change(function() {
-        sprint = Sprints[$(this).val()];
-        Task.get(0, 0, {"project_id": project.id, "sprint_id": $("#sSprint").val()}, loadTasks);
+    $("#bNewComment").click(function() {
+        $("#bNewComment").button('loading');
+        var comment = tNewComment.value;
+        var c = new Comment(comment, updateTask, 0, getTimeStamp(), user.id);
+        c.create(function(data) {
+            addComments(data);
+        });
+        tNewComment.value = "";
     });
 
     $("#bUpdateSearch").click(function() {
@@ -40,67 +56,65 @@ $(document).ready(function() {
         callService(urlbase + "/ProjectCtrlService.php", params, "refreshTable", null);
     });
 
+    $("#bNewTaskPanelCancel").click(function() {
+        $("#new_task_panel").modal('hide');
+    });
+
+    $("#bSprintPanelCancel").click(function() {
+        $("#new_sprint_panel").modal('hide');
+    });
+
+    $("#bUpdateTask").click(function() {
+        if ($("input[type='radio'].radioUpdateTask").is(':checked')) {
+            Tasks[updateTask].points = $("input[type='radio'].radioUpdateTask:checked").val();
+        }
+        Tasks[updateTask].state_id = $("#sStatusUpdate").val();
+        Tasks[updateTask].user_id = $("#sUserUpdate").val();
+        Tasks[updateTask].component_id = "null";
+        Tasks[updateTask].update("updatecheck");
+    });
+
     // <editor-fold defaultstate="collapsed" desc="Create New Task">
     $("#bCreateNewTask").click(function() {
         var name = tTaskName.value;
         var desc = tTaskDescription.value;
+
         if ($("input[type='radio'].radioNewTask").is(':checked')) {
             var points = $("input[type='radio'].radioNewTask:checked").val();
         }
         var dep = document.getElementById("sSetDepartment");
         var depVal = dep.options[dep.selectedIndex].value;
-//        console.log(depVal);
+
         var status = document.getElementById("sSetStatus");
         var statusVal = status.options[status.selectedIndex].value;
-//        console.log(statusVal);
+
         var user = document.getElementById("sSetUser");
         var userVal = user.options[user.selectedIndex].value;
-//        console.log(userVal);
+
         var comp = document.getElementById("sSetComponent");
         var compVal = comp.options[comp.selectedIndex].value;
-//        console.log(compVal);
+
         var sprint = document.getElementById("sSprint");
         var SprintVal = sprint.options[sprint.selectedIndex].value;
-        ;
 
         var newTask = new Task(userVal, "null", SprintVal, compVal, points, project.id, depVal, name, desc, statusVal);
         newTask.create(function(objetoNuevo) {
             $("#new_task_panel").modal('hide');
-            var args = new Array();
-            args[0] = objetoNuevo.id;
-            args[1] = "<input type=\"checkbox\">​";
-            args[2] = objetoNuevo.id;
-            args[3] = objetoNuevo.name;
-            args[4] = objetoNuevo.points;
-            if (objetoNuevo.user_id != "null") {
-                args[5] = Users[objetoNuevo.user_id].name;
-            } else {
-                args[5] = "N/A";
-            }
-            args[6] = Departments[objetoNuevo.department_id].name;
-            if (objetoNuevo.component_id != "null") {
-                args[7] = Components[objetoNuevo.component_id].name;
-            } else {
-                args[7] = "N/A";
-            }
-            args[8] = Task_states[objetoNuevo.state_id].name;
-            $("#tableTasks").append(generateRow(args));
+            loadTasks(Tasks);
+            tTaskName.value = "";
+            tTaskDescription.value = "";
         });
     });
     // </editor-fold>
-    
-    $("#bUpdateTask").click(function (){
-        console.log($("#sStatusUpdate").val());
-        Tasks[updateTask].state_id = $("#sStatusUpdate").val();
-        Tasks[updateTask].user_id = $("#sUserUpdate").val();
-        Tasks[updateTask].component_id = "null"//TODO: implement 
-        Tasks[updateTask].update(updatecheck());
-        //Task_states[Tasks[updateTask].state_id].update();
-    });
+
+    // </editor-fold>
+
+    // </editor-fold>
 });
 
-function updatecheck(data){
-    console.log(data);
+function updatecheck(data) {
+    $("#task_panel").modal('hide');
+    loadTasks(Tasks);
 }
 
 function refreshTable() {
@@ -197,13 +211,13 @@ function loadTasks(data) {
         args[i][2] = element.id;
         args[i][3] = element.name;
         args[i][4] = element.points;
-        if (element.user_id != null) {
+        if (element.user_id != null && element.user_id != "null") {
             args[i][5] = Users[element.user_id].name;
         } else {
             args[i][5] = "N/A";
         }
         args[i][6] = Departments[element.department_id].name;
-        if (element.component_id != null) {
+        if (element.component_id != null && element.component_id != "null") {
             args[i][7] = Components[element.component_id].name;
         } else {
             args[i][7] = "N/A";
@@ -211,16 +225,60 @@ function loadTasks(data) {
         args[i][8] = Task_states[element.state_id].name;
         i++;
     });
-    $("#tableTasks").html(generateTableFunction(table, args,"loadSpec"));
+    $("#tableTasks").html(generateTableFunction(table, args, "loadSpec"));
 }
 
-function loadSpec(id){
+function loadSpec(id) {
+    var T = Tasks[id];
+    //TODO set User
+    clearComments();
+    $("#bNewComment").button('loading');
     $("#task_panel").modal();
-    $("#lInfoName").html("#" + id + " " + $("#Name"+id).html());
-    $("#lLinfoDep").html($("#Department"+id).html())
-    $("#optionsRadios"+$("#Points"+id).html()).click();
+    $("#lInfoName").html("#" + id + " " + $("#Name" + id).html());
+    $("#lLinfoDep").html($("#Department" + id).html());
+    $("#sUserUpdate").val(id).attr('selected', true);
+    $("#optionsRadios" + $("#Points" + id).html()).click();
     updateTask = id;
-    //console.log(Task_states[Tasks[id].state_id]);
-    //console.log(Tasks[id])
-    
+    Comment.get(0, 0, {'task_id': id}, setComments);
 }
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Comments">
+function clearComments() {
+    $("#commentList").html("");
+}
+
+function setComments(data) {
+    var htmlComments = "";
+    data.forEach(function(element) {
+        htmlComments += '<div class="text-left"> <b>' + element.time + ' ' + Users[element.user_id].name
+        + ': </b>' + element.comment + '</div>';
+    });
+    $("#commentList").html(htmlComments);
+    $("#bNewComment").button('reset');
+}
+
+function addComments(element) {
+    var htmlComments = '<div class="text-left"> <b>' + element.time + ' ' + Users[element.user_id].name
+    + ': </b>' + element.comment + '</div>';
+    $("#commentList").append(htmlComments);
+    $("#bNewComment").button('reset');
+}
+
+// </editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="Helpers">
+function getTimeStamp() {
+    var now = new Date();
+    return (now.getFullYear() + '-' +
+            (now.getMonth() + 1) + '-' +
+            (now.getDate()) + " " +
+            now.getHours() + ':' +
+            ((now.getMinutes() < 10)
+                    ? ("0" + now.getMinutes())
+                    : (now.getMinutes())) + ':' +
+            ((now.getSeconds() < 10)
+                    ? ("0" + now.getSeconds())
+                    : (now.getSeconds())));
+}
+// </editor-fold>
