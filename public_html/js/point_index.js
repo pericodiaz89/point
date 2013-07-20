@@ -14,7 +14,7 @@ function signIn() {
         data.forEach(function(element) {
             localStorage.setItem('user', JSON.stringify(element));
         });
-        window.top.location.href = 'Home.html';
+        window.top.location.href = 'home.html';
     });
 }
 

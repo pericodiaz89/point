@@ -27,6 +27,7 @@ $(document).ready(function() {
         var nSprint = new Sprint(project.id, tSprintDescription.value, tSprintName.value, "null", tSprintDate.value);
         nSprint.create(function(sprint) {
             $("#sSprint").append('<option value="' + sprint.id + '">' + sprint.name + '</option>');
+            $("#sSprintChange").append('<option value="' + sprint.id + '">' + sprint.name + '</option>');
         });
     });
 
@@ -204,6 +205,7 @@ function loadTasks(data) {
     table[6] = "Component";
     table[7] = "Status";
     var i = 0;
+    var sum = 0;
     data.forEach(function(element) {
         args[i] = new Array();
         args[i][0] = element.id;
@@ -211,6 +213,7 @@ function loadTasks(data) {
         args[i][2] = element.id;
         args[i][3] = element.name;
         args[i][4] = element.points;
+        sum += parseInt(element.points);
         if (element.user_id != null && element.user_id != "null") {
             args[i][5] = Users[element.user_id].name;
         } else {
@@ -226,6 +229,7 @@ function loadTasks(data) {
         i++;
     });
     $("#tableTasks").html(generateTableFunction(table, args, "loadSpec"));
+    $("#pointSum").html("Point Sum: " + sum);
 }
 
 function loadSpec(id) {
@@ -236,8 +240,11 @@ function loadSpec(id) {
     $("#task_panel").modal();
     $("#lInfoName").html("#" + id + " " + $("#Name" + id).html());
     $("#lLinfoDep").html($("#Department" + id).html());
-    $("#sUserUpdate").val(id).attr('selected', true);
+    $("#sUserUpdate").val(T.user_id).attr('selected', true);
+    $("#sStatusUpdate").val(T.state_id).attr('selected', true);
     $("#optionsRadios" + $("#Points" + id).html()).click();
+
+
     updateTask = id;
     Comment.get(0, 0, {'task_id': id}, setComments);
 }
