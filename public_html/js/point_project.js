@@ -2,6 +2,7 @@ var user;
 var project;
 var sprint;
 var updateTask;
+var isCreatingTask = true;
 
 $(document).ready(function() {
     checkUser();
@@ -20,6 +21,11 @@ $(document).ready(function() {
         $("#new_sprint_panel").modal();
     });
     $("#bCreateTask").click(function() {
+        $("#bCreateNewTask").text("Create Task");
+        $("#lNewTask").text("New Task");
+        isCreatingTask = true;
+        tTaskName.value = "";
+        tTaskDescription.value = "";
         $("#new_task_panel").modal();
     });
     $("#createSprint").click(function() {
@@ -75,6 +81,23 @@ $(document).ready(function() {
         Tasks[updateTask].update("updatecheck");
     });
 
+    $("#bModifyTask").click(function() {
+        $("#task_panel").modal('hide');
+        $("#new_task_panel").modal();
+        isCreatingTask = false;
+        var T = Tasks[updateTask];
+        tTaskName.value = T.name;
+        tTaskDescription.value = T.description;
+        $("#sSetDepartment").val(T.department_id).attr('selected', true);
+        $("#sSetUser").val(T.user_id).attr('selected', true);
+        $("#sSetStatus").val(T.state_id).attr('selected', true);
+        //$("#sSetStatus").val(T.state_id).attr('selected', true); TODO Component
+        $("#rbOptionNewTask" + $("#Points" + T.id).html()).click();
+
+        $("#bCreateNewTask").text("Update Task");
+        $("#lNewTask").text("Update Task");
+    });
+
     // <editor-fold defaultstate="collapsed" desc="Create New Task">
     $("#bCreateNewTask").click(function() {
         var name = tTaskName.value;
@@ -98,13 +121,23 @@ $(document).ready(function() {
         var sprint = document.getElementById("sSprint");
         var SprintVal = sprint.options[sprint.selectedIndex].value;
 
-        var newTask = new Task(userVal, "null", SprintVal, compVal, points, project.id, depVal, name, desc, statusVal);
-        newTask.create(function(objetoNuevo) {
-            $("#new_task_panel").modal('hide');
-            loadTasks(Tasks);
-            tTaskName.value = "";
-            tTaskDescription.value = "";
-        });
+        if (isCreatingTask) {
+            var newTask = new Task(userVal, "null", SprintVal, compVal, points, project.id, depVal, name, desc, statusVal);
+            newTask.create(function(objetoNuevo) {
+                $("#new_task_panel").modal('hide');
+                loadTasks(Tasks);
+            });
+        } else {
+            var T = Tasks[updateTask];
+            T.department_id = depVal;
+            T.description = desc;
+            T.name = name;
+            T.points = points;
+            T.state_id = statusVal;
+            T.user_id = userVal;
+            T.component_id = "null";
+            T.update("updatecheck");
+        }
     });
     // </editor-fold>
 
@@ -115,6 +148,7 @@ $(document).ready(function() {
 
 function updatecheck(data) {
     $("#task_panel").modal('hide');
+    $("#new_task_panel").modal('hide');
     loadTasks(Tasks);
 }
 
@@ -242,6 +276,7 @@ function loadSpec(id) {
     $("#lLinfoDep").html($("#Department" + id).html());
     $("#sUserUpdate").val(T.user_id).attr('selected', true);
     $("#sStatusUpdate").val(T.state_id).attr('selected', true);
+    $("#tTaskDescription_taskpanel").text(T.description);
     $("#optionsRadios" + $("#Points" + id).html()).click();
 
 

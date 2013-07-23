@@ -23,7 +23,8 @@ class MysqlDBC {
     private $password;
     private $name;
 
-    private function __construct($url = 'localhost', $username = 'blueprin_emerald', $password = 'emer@ld', $name = 'blueprin_emerald') {
+//    private function __construct($url = 'localhost', $username = 'blueprin_emerald', $password = 'emer@ld', $name = 'blueprin_emerald') {
+    private function __construct($url = 'localhost', $username = 'root', $password = '', $name = 'point') {
         $this->url = $url;
         $this->username = $username;
         $this->password = $password;

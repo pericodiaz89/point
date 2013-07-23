@@ -84,7 +84,7 @@
         <div id="new_task_panel" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3>New Task</h3>
+                <h3 id="lNewTask">New Task</h3>
             </div>
             <div class="modal-body">
                 <div class="form-inline">
@@ -139,8 +139,10 @@
         <div id="task_panel" class="modal hide fade in" tabindex="-1" role="dialog">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
                 <h4 id="lInfoName" class="text-center">#1 Description of the task at hand since its a long story</h4>
-                <div class="well well-small">Description of the task</div>
+                <div id="tTaskDescription_taskpanel" class="well well-small">Description of the task</div>
+
                 <table class="table-condensed">
                     <tr>
                         <td><label class="label">Department</label></td>
@@ -181,7 +183,7 @@
                         </tr>
                     </table>
                 </div>
-                <button id="bUpdateTask" class="btn btn-success">Update Task</button>
+                <button id="bUpdateTask" class="btn btn-success">Update Task</button><i id="bModifyTask" class="icon-pencil pull-right"></i>
             </div>
             <div class="modal-body modal-body-short">
                 <h4 class="text-center">Comments</h4>
