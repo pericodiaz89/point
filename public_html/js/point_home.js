@@ -35,6 +35,35 @@ function checkUser() {
             var h = generateTable(table, args);
             document.getElementById("tableProyects").innerHTML = h;
         });
+        Task.get(0,10,{"user_id": user.id},function getfinish(data){
+            var table = new Array();
+            var args = new Array();
+            var i = 0;
+            table[0] = "#";
+            table[1] = "Name";
+            table[2] = "Points";
+            table[3] = "Department";
+            table[4] = "Component";
+            table[5] = "Project";
+            data.forEach(function(element){
+                args[i] = new Array();
+                args[i][0] = element.id;
+                args[i][1] = element.id;
+                args[i][2] = element.name;
+                args[i][3] = element.points;
+                args[i][4] = element.department_id;
+                if(args[i][5]!=null){
+                    args[i][5] = element.component_id;
+                }else{
+                    args[i][5] = "N/A";
+                }
+                args[i][6] = element.project_id;   
+                console.log(element);
+                i++;
+            });
+            var h = generateTableFunction(table,args,"loadSpec");
+            document.getElementById("tableTasks").innerHTML = h;
+        });
     }
 }
 
