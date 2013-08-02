@@ -35,6 +35,7 @@ function checkUser() {
             var h = generateTable(table, args);
             document.getElementById("tableProyects").innerHTML = h;
         });
+        Department.get(0,10,{},function getfinish(data){});
         Task.get(0,10,{"user_id": user.id},function getfinish(data){
             var table = new Array();
             var args = new Array();
@@ -51,19 +52,20 @@ function checkUser() {
                 args[i][1] = element.id;
                 args[i][2] = element.name;
                 args[i][3] = element.points;
-                args[i][4] = element.department_id;
+                args[i][4] = Departments[element.department_id].name;
                 if(args[i][5]!=null){
                     args[i][5] = element.component_id;
                 }else{
                     args[i][5] = "N/A";
                 }
-                args[i][6] = element.project_id;   
+                args[i][6] = Projects[element.project_id].name;   
                 console.log(element);
                 i++;
             });
             var h = generateTableFunction(table,args,"loadSpec");
             document.getElementById("tableTasks").innerHTML = h;
         });
+        
     }
 }
 
