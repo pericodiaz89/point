@@ -36,7 +36,7 @@ function checkUser() {
             document.getElementById("tableProyects").innerHTML = h;
         });
         Department.get(0,10,{},function getfinish(data){});
-        Task.get(0,10,{"user_id": user.id},function getfinish(data){
+        Task.get(0,10,{"user_id": user.id,"state_id":1},function getfinish(data){
             var table = new Array();
             var args = new Array();
             var i = 0;
