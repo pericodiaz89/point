@@ -34,46 +34,63 @@
 
         <div class="container-fluid">
             <div class="row-fluid">
-                <div class="span3">
-                    <div class="well sidebar-nav">
-                        <ul class="nav nav-list">
-                            <li class="nav-header">Sidebar</li>
-                            <li class="active"><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li class="nav-header">Sidebar</li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li class="nav-header">Sidebar</li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                        </ul>
-                    </div><!--/.well -->
-                </div><!--/span-->
-                <div class="span9">
-                    <div class="hero-unit">
-                        <h1>Hello, world!</h1>
-                        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                        <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+
+                <div class="component">
+                    <ul class="breadcrumb">
+                        <li><a href="#">Root</a> <span class="divider">/</span></li>
+                        <li><a href="#">Component 1</a> <span class="divider">/</span></li>
+                        <li class="active">Current Component Name</li>
+                    </ul>
+                    <div class="btn-group">
+                        <button class="btn " data-toggle="button">
+                            <span class="icon-ok-sign"></span>
+                        </button>
+                        <button class="btn">Component 2</button>
                     </div>
+                    <div class="btn-group">
+                        <button class="btn " data-toggle="button">
+                            <span class="icon-ok-sign"></span>
+                        </button>
+                        <button class="btn">Component 3</button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn " data-toggle="button">
+                            <span class="icon-ok-sign"></span>
+                        </button>
+                        <button class="btn">Component 4</button>
+                    </div>
+                    <button class="btn btn-success"><i class="icon-plus icon-white"></i></button>
+                </div>
+            </div><!--/span-->
+            <br>
+            <div class="btn-group">
+                <a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
+                    Set Selected Components to
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Componente 1</a></li>
+                    <li><a href="#">Componente 2</a></li>
+                    <li><a href="#">Componente 3</a></li>
+                    <li class="dropdown-submenu"><a tabindex="-1" href="#">More Options</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Componente 5</a></li>
+                            <li><a href="#">Componente 6</a></li>
+                            <li><a href="#">Componente 7</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <button class="btn btn-danger">
+                <span class="icon-trash icon-white"></span>
+            </button>
+        </div><!--/row-->
 
-                </div><!--/span-->
-            </div><!--/row-->
+        <hr>
 
-            <hr>
-
-            <footer>
-                <p>&copy; Company 2013</p>
-            </footer>
-
-
-        </div> <!-- /container -->
+        <footer>
+            <p>&copy; Emerald Digital Entertainment 2013</p>
+        </footer>
 
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.js"></script>
