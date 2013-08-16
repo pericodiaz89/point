@@ -7,12 +7,17 @@ $(document).ready(function() {
             });
         });
     });
+    $("#lLogOut").click(function(){
+        localStorage.clear();
+        window.top.location.href = 'index.html';
+    });
 });
 
 var user;
 window.onload = checkUser();
 
 function checkUser() {
+    console.log(localStorage.getItem('user'))
     if (localStorage.getItem('user') == undefined) {
         window.top.location.href = 'index.html';
     } else {

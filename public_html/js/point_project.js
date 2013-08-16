@@ -11,12 +11,16 @@ $(document).ready(function() {
 
     $("#sSprint").change(function() {
         sprint = Sprints[$(this).val()];
+        localStorage.setItem(project.name+'lastSprint',$(this).val());
         Tasks = [];
         Task.get(0, 0, {"project_id": project.id, "sprint_id": $("#sSprint").val()}, loadTasks);
     });
 
     // <editor-fold defaultstate="collapsed" desc="Clicks">
-
+    $("#lLogOut").click(function(){
+        localStorage.clear();
+        window.top.location.href = 'index.html';
+    });
     $("#bNewSprint").click(function() {
         $("#new_sprint_panel").modal();
     });
@@ -98,6 +102,7 @@ $(document).ready(function() {
         $("#lNewTask").text("Update Task");
     });
 
+   
     // <editor-fold defaultstate="collapsed" desc="Create New Task">
     $("#bCreateNewTask").click(function() {
         var name = tTaskName.value;
@@ -214,6 +219,10 @@ function loadSprints(data) {
     });
     $("#sSprintChange").html(htmlSprints);
     $("#sSprint").html(htmlSprints);
+    $("#sSprint").html(htmlSprints);
+    if(localStorage.getItem(project.name+'lastSprint')!=undefined){
+        $("#sSprint").val(localStorage.getItem(project.name+'lastSprint')).attr('selected', true);
+    }
     Task.get(0, 0, {"project_id": project.id, "sprint_id": $("#sSprint").val()}, loadTasks);
 }
 
