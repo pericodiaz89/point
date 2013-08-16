@@ -293,6 +293,25 @@ function loadSpec(id) {
     Comment.get(0, 0, {'task_id': id}, setComments);
 }
 // </editor-fold>
+function checked(){
+    var count = 0;
+    var sum = 0;
+    var table = document.getElementById("tableTasks");
+    for (var i = 1; i < table.rows.length; i++) {
+        sum += parseInt ($("#"+table.rows[i].cells[3].id).html());
+        if (table.rows[i].cells[0].getElementsByTagName("input")[0].checked) {
+            count += parseInt ($("#"+table.rows[i].cells[3].id).html());
+        }
+    }
+    
+        console.log(count);
+        if(count!=0){
+            $("#selectedPointSum").html("Points Selected: " + count);
+        }else{
+            $("#selectedPointSum").html("");
+        }
+    
+}
 
 // <editor-fold defaultstate="collapsed" desc="Comments">
 function clearComments() {

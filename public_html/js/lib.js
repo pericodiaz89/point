@@ -52,7 +52,7 @@ function generateTableFunction(table, args, click){
             if(j!=1){
                 h += "<td id=\""+table[j-1]+args[i][0]+"\" onclick=\""+click+"("+args[i][0]+")\">"+args[i][j]+"</td>";
             }else{
-                h += "<td>"+args[i][j]+"</td>";
+                h += "<td onclick=checked()>"+args[i][j]+"</td>";
             }
         }
         h += "</tr>";
