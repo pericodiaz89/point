@@ -101,8 +101,25 @@ $(document).ready(function() {
         $("#bCreateNewTask").text("Update Task");
         $("#lNewTask").text("Update Task");
     });
+    
+    $("#bDeleteTask").click(function(){
+        $("#task_panel").modal('hide');
+        $("#confirmation_panel").modal();
+    });
+    
+    $("#bConfirmation").click(function() {
+        Tasks[updateTask].remove(function(){
+            Tasks[updateTask]=undefined;
+            refreshTable();
+        });
+        $("#confirmation_panel").modal('hide');
+    });
 
-   
+    $("#bCancel").click(function() {
+        $("#confirmation_panel").modal('hide');
+        
+    });
+    
     // <editor-fold defaultstate="collapsed" desc="Create New Task">
     $("#bCreateNewTask").click(function() {
         var name = tTaskName.value;

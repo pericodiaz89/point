@@ -167,7 +167,7 @@ class Task {
         $name = $mysql->checkVariable($Task->getName());
         $description = $mysql->checkVariable($Task->getDescription());
         $state_id = $mysql->checkVariable($Task->getState_id());
-        return $mysql->delete("DELETE FROM `task` WHERE `id` = '$id' AND `project_id` = '$project_id' LIMIT 1"
+        return $mysql->delete("DELETE FROM `task` WHERE `id` = $id AND `project_id` = $project_id LIMIT 1"
         );
     }
 
