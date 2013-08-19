@@ -189,7 +189,11 @@
                         </tr>
                     </table>
                 </div>
-                <button id="bUpdateTask" class="btn btn-success">Update Task</button><i id="bModifyTask" class="icon-pencil pull-right"></i>
+                <button id="bUpdateTask" class="btn btn-success">Update Task</button>
+                <i id="bModifyTask" class="icon-pencil pull-right"></i>
+                <br>
+                <i id="bDeleteTask" class="icon-remove pull-right"></i>
+                <br>
             </div>
             <div class="modal-body modal-body-short">
                 <h4 class="text-center">Comments</h4>
@@ -204,7 +208,12 @@
                 </div>
             </div>
         </div>
-
+        <div id="confirmation_panel" class="modal hide fade in" tabindex="-1" role="dialog">
+            <label>Do you really want to delete this task?</label>
+            <br>
+            <button id="bConfirmation" class="btn btn-danger">Yes</button>
+            <button id="bCancel" class="btn btn-success">No</button>
+        </div>
         <div id="new_sprint_panel" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
