@@ -53,7 +53,7 @@
 		 $id = $mysql->checkVariable($Project->getId());
 		 $name = $mysql->checkVariable($Project->getName());
 		 return $mysql->update(
-				"UPDATE `project` SET`name`=$name WHERE `id` = '$id' " 
+				"UPDATE `project` SET`name`=$name WHERE `id` = $id " 
 		);
 	}
 
@@ -62,11 +62,11 @@
 		
 		 $id = $mysql->checkVariable($Project->getId());
 		 $name = $mysql->checkVariable($Project->getName());
-		 return $mysql->delete("DELETE FROM `project` WHERE `id` = '$id' LIMIT 1"
+		 return $mysql->delete("DELETE FROM `project` WHERE `id` = $id LIMIT 1"
 		);
 	}
 
-	public static function getList($page, $count, $filters) {
+	public static function getList($page, $count, $filters,$orderby) {
 		// <editor-fold defaultstate="collapsed" desc="Limit">
 		$limit = "";
 		if ($count > 0 && $page >= 0) {
@@ -82,14 +82,32 @@
 				$where = " WHERE ";
 				$keys = array_keys($filters);
 				for ($i = 0; $i < count($keys); $i++) {
+				if (preg_match('/' . preg_quote('.*') . '/', $filters[$keys[$i]])) {
+					$filters[$keys[$i]] = str_replace('.*', '%', $filters[$keys[$i]]);
+					$where .= "project." . $keys[$i] . " LIKE " . $filters[$keys[$i]];
+				} else {
 					$where .= "project." . $keys[$i] . " = '" . $filters[$keys[$i]] . "'";
+					}
 					if ($i < count($keys) - 1) {
 						$where .= " AND ";
 					}
 				}
 			}
 		}
-		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `project` $where $limit");
+		// </editor-fold>
+		// <editor-fold defaultstate="collapsed" desc="Order By">
+		$ob = '';
+		if (isset($orderby)) {
+			$ob = " ORDER BY ";
+			for ($i = 0; $i < count($orderby); $i++) {
+				$ob .= $orderby[$i];
+				if ($i < count($orderby) - 1) {
+					$ob .= ", ";
+				}
+			}
+		}
+		// </editor-fold>
+		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `project` $where $limit $ob");
 		$list = array();
 		while ($row = $result->fetch_object()) {
 			$Entity = Project::get($row);

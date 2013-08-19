@@ -2,16 +2,16 @@
  class User {
 
 	 private $id;
-	 private $name;
-	 private $password;
 	 private $username;
+	 private $password;
+	 private $name;
 	 private $email;
 
- function __construct($id, $name, $password, $username, $email){
+ function __construct($id, $username, $password, $name, $email){
 		 $this->id=$id;
-		 $this->name=$name;
-		 $this->password=$password;
 		 $this->username=$username;
+		 $this->password=$password;
+		 $this->name=$name;
 		 $this->email=$email;
 	}
  
@@ -19,7 +19,7 @@
 		if(property_exists($object, "User")){
 			$object = $object->User;
 		}
-		return new User ($object->id, $object->name, $object->password, $object->username, $object->email);
+		return new User ($object->id, $object->username, $object->password, $object->name, $object->email);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
@@ -32,12 +32,12 @@
 		$this->id = $id;
 	}
 
-	 public function getName() {
-		 return $this->name;
+	 public function getUsername() {
+		 return $this->username;
 	 }
 
-	 public function setName($name){
-		$this->name = $name;
+	 public function setUsername($username){
+		$this->username = $username;
 	}
 
 	 public function getPassword() {
@@ -48,12 +48,12 @@
 		$this->password = $password;
 	}
 
-	 public function getUsername() {
-		 return $this->username;
+	 public function getName() {
+		 return $this->name;
 	 }
 
-	 public function setUsername($username){
-		$this->username = $username;
+	 public function setName($name){
+		$this->name = $name;
 	}
 
 	 public function getEmail() {
@@ -71,12 +71,12 @@
 		$mysql = MysqlDBC::getInstance();
 		
 		 $id = $mysql->checkVariable($User->getId());
-		 $name = $mysql->checkVariable($User->getName());
-		 $password = $mysql->checkVariable($User->getPassword());
 		 $username = $mysql->checkVariable($User->getUsername());
+		 $password = $mysql->checkVariable($User->getPassword());
+		 $name = $mysql->checkVariable($User->getName());
 		 $email = $mysql->checkVariable($User->getEmail());
 		return $mysql->insert(
-				 " INSERT INTO `user` (`id`,`name`,`password`,`username`,`email`) VALUES ($id,$name,$password,$username,$email)"
+				 " INSERT INTO `user` (`id`,`username`,`password`,`name`,`email`) VALUES ($id,$username,$password,$name,$email)"
 		);
 	}
 
@@ -84,12 +84,12 @@
 		$mysql = MysqlDBC::getInstance();
 		
 		 $id = $mysql->checkVariable($User->getId());
-		 $name = $mysql->checkVariable($User->getName());
-		 $password = $mysql->checkVariable($User->getPassword());
 		 $username = $mysql->checkVariable($User->getUsername());
+		 $password = $mysql->checkVariable($User->getPassword());
+		 $name = $mysql->checkVariable($User->getName());
 		 $email = $mysql->checkVariable($User->getEmail());
 		 return $mysql->update(
-				"UPDATE `user` SET`name`=$name,`password`=$password,`username`=$username,`email`=$email WHERE `id` = '$id' " 
+				"UPDATE `user` SET`username`=$username,`password`=$password,`name`=$name,`email`=$email WHERE `id` = $id " 
 		);
 	}
 
@@ -97,15 +97,15 @@
 		$mysql = MysqlDBC::getInstance();
 		
 		 $id = $mysql->checkVariable($User->getId());
-		 $name = $mysql->checkVariable($User->getName());
-		 $password = $mysql->checkVariable($User->getPassword());
 		 $username = $mysql->checkVariable($User->getUsername());
+		 $password = $mysql->checkVariable($User->getPassword());
+		 $name = $mysql->checkVariable($User->getName());
 		 $email = $mysql->checkVariable($User->getEmail());
-		 return $mysql->delete("DELETE FROM `user` WHERE `id` = '$id' LIMIT 1"
+		 return $mysql->delete("DELETE FROM `user` WHERE `id` = $id LIMIT 1"
 		);
 	}
 
-	public static function getList($page, $count, $filters) {
+	public static function getList($page, $count, $filters,$orderby) {
 		// <editor-fold defaultstate="collapsed" desc="Limit">
 		$limit = "";
 		if ($count > 0 && $page >= 0) {
@@ -121,14 +121,32 @@
 				$where = " WHERE ";
 				$keys = array_keys($filters);
 				for ($i = 0; $i < count($keys); $i++) {
+				if (preg_match('/' . preg_quote('.*') . '/', $filters[$keys[$i]])) {
+					$filters[$keys[$i]] = str_replace('.*', '%', $filters[$keys[$i]]);
+					$where .= "user." . $keys[$i] . " LIKE " . $filters[$keys[$i]];
+				} else {
 					$where .= "user." . $keys[$i] . " = '" . $filters[$keys[$i]] . "'";
+					}
 					if ($i < count($keys) - 1) {
 						$where .= " AND ";
 					}
 				}
 			}
 		}
-		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `user` $where $limit");
+		// </editor-fold>
+		// <editor-fold defaultstate="collapsed" desc="Order By">
+		$ob = '';
+		if (isset($orderby)) {
+			$ob = " ORDER BY ";
+			for ($i = 0; $i < count($orderby); $i++) {
+				$ob .= $orderby[$i];
+				if ($i < count($orderby) - 1) {
+					$ob .= ", ";
+				}
+			}
+		}
+		// </editor-fold>
+		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `user` $where $limit $ob");
 		$list = array();
 		while ($row = $result->fetch_object()) {
 			$Entity = User::get($row);
@@ -142,9 +160,9 @@
 	public function toArray() {
 		return array(
 			'id' => $this->getId(),
-			'name' => $this->getName(),
-			'password' => $this->getPassword(),
 			'username' => $this->getUsername(),
+			'password' => $this->getPassword(),
+			'name' => $this->getName(),
 			'email' => $this->getEmail()
 		 );
 	}

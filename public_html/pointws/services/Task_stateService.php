@@ -40,7 +40,12 @@
 			  $filters = json_decode($_REQUEST['filters']);
 		 }
 		 if (checkParams('page', 'count')) {
-			  $A = (Task_state::getList($_REQUEST['page'], $_REQUEST['count'], $filters));
+			if (checkParam('orderby')) {
+				$orderby = json_decode($_REQUEST['orderby']);
+				$A = (Task_state::getList($_REQUEST['page'], $_REQUEST['count'], $filters, $orderby));
+			} else {
+				$A = (Task_state::getList($_REQUEST['page'], $_REQUEST['count'], $filters, NULL));
+			}
 			 return ArrayHelper::toArray($A);
 		 } else {
 			 return getErrorArray(03, "Parameters missing (page, count)");
