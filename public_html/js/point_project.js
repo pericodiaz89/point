@@ -101,12 +101,12 @@ $(document).ready(function() {
         $("#bCreateNewTask").text("Update Task");
         $("#lNewTask").text("Update Task");
     });
-    
+
     $("#bDeleteTask").click(function(){
         $("#task_panel").modal('hide');
         $("#confirmation_panel").modal();
     });
-    
+
     $("#bConfirmation").click(function() {
         Tasks[updateTask].remove(function(){
             Tasks[updateTask]=undefined;
@@ -117,9 +117,9 @@ $(document).ready(function() {
 
     $("#bCancel").click(function() {
         $("#confirmation_panel").modal('hide');
-        
+
     });
-    
+
     // <editor-fold defaultstate="collapsed" desc="Create New Task">
     $("#bCreateNewTask").click(function() {
         var name = tTaskName.value;
@@ -185,7 +185,7 @@ function refreshTable() {
     if ($("#sUser").val() != "null") {
         filter["user_id"] = $("#sUser").val();
     }
-    Task.get(0, 0, filter, loadTasks);
+    Task.get(0, 0, filter, ["id DESC"], loadTasks);
 }
 
 function checkUser() {
@@ -200,11 +200,11 @@ function checkUser() {
         document.getElementById("projectName").innerHTML = project.name;
         document.getElementById("lcurrentSprint").innerHTML = "Backlog";
 
-        Sprint.get(0, 20, {"project_id": project.id}, loadSprints);
-        Department.get(0, 10, {}, loadDepartments);
-        User.get(0, 10, {}, loadUsers);
+        Sprint.get(0, 0, {"project_id": project.id}, [], loadSprints);
+        Department.get(0, 0, {}, [], loadDepartments);
+        User.get(0, 0, {}, [], loadUsers);
 //        Component.get(0, 0, {"project_id": project.id});
-        Task_state.get(0, 0, {}, loadTask_states);
+        Task_state.get(0, 0, {}, [], loadTask_states);
     }
 }
 
@@ -240,7 +240,7 @@ function loadSprints(data) {
     if(localStorage.getItem(project.name+'lastSprint')!=undefined){
         $("#sSprint").val(localStorage.getItem(project.name+'lastSprint')).attr('selected', true);
     }
-    Task.get(0, 0, {"project_id": project.id, "sprint_id": $("#sSprint").val()}, loadTasks);
+    Task.get(0, 0, {"project_id": project.id, "sprint_id": $("#sSprint").val()}, ["id DESC"], loadTasks);
 }
 
 function loadDepartments(data) {
@@ -307,7 +307,7 @@ function loadSpec(id) {
 
 
     updateTask = id;
-    Comment.get(0, 0, {'task_id': id}, setComments);
+    Comment.get(0, 0, {'task_id': id}, [], setComments);
 }
 // </editor-fold>
 function checked(){
@@ -320,14 +320,14 @@ function checked(){
             count += parseInt ($("#"+table.rows[i].cells[3].id).html());
         }
     }
-    
+
         console.log(count);
         if(count!=0){
             $("#selectedPointSum").html("Points Selected: " + count);
         }else{
             $("#selectedPointSum").html("");
         }
-    
+
 }
 
 // <editor-fold defaultstate="collapsed" desc="Comments">

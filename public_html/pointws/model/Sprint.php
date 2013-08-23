@@ -123,7 +123,7 @@
 				for ($i = 0; $i < count($keys); $i++) {
 				if (preg_match('/' . preg_quote('.*') . '/', $filters[$keys[$i]])) {
 					$filters[$keys[$i]] = str_replace('.*', '%', $filters[$keys[$i]]);
-					$where .= "sprint." . $keys[$i] . " LIKE " . $filters[$keys[$i]];
+					$where .= "sprint." . $keys[$i] . " LIKE '" . $filters[$keys[$i]] . "'";
 				} else {
 					$where .= "sprint." . $keys[$i] . " = '" . $filters[$keys[$i]] . "'";
 					}
@@ -136,7 +136,7 @@
 		// </editor-fold>
 		// <editor-fold defaultstate="collapsed" desc="Order By">
 		$ob = '';
-		if (isset($orderby)) {
+		if (isset($orderby) && count($orderby) > 0) {
 			$ob = " ORDER BY ";
 			for ($i = 0; $i < count($orderby); $i++) {
 				$ob .= $orderby[$i];
@@ -146,7 +146,7 @@
 			}
 		}
 		// </editor-fold>
-		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `sprint` $where $limit $ob");
+		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `sprint` $where $ob $limit");
 		$list = array();
 		while ($row = $result->fetch_object()) {
 			$Entity = Sprint::get($row);
