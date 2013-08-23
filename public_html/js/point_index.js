@@ -9,7 +9,7 @@ window.onload = checkUser();
 function signIn() {
     var username = tUsername.value;
     var password = tPassword.value;
-    User.get(0, 1, {"username": username, "password": password}, function getFinished(data) {
+    User.get(0, 1, {"username": username, "password": password}, [], function getFinished(data) {
         console.log(data);
         data.forEach(function(element) {
             localStorage.setItem('user', JSON.stringify(element));

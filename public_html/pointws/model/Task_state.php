@@ -1,30 +1,22 @@
 <?php 
  class Task_state {
 
-	 private $id;
 	 private $name;
+	 private $id;
 
- function __construct($id, $name){
-		 $this->id=$id;
+ function __construct($name, $id){
 		 $this->name=$name;
+		 $this->id=$id;
 	}
  
 	public static function get($object){
 		if(property_exists($object, "Task_state")){
 			$object = $object->Task_state;
 		}
-		return new Task_state ($object->id, $object->name);
+		return new Task_state ($object->name, $object->id);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
-
-	 public function getId() {
-		 return $this->id;
-	 }
-
-	 public function setId($id){
-		$this->id = $id;
-	}
 
 	 public function getName() {
 		 return $this->name;
@@ -33,6 +25,14 @@
 	 public function setName($name){
 		$this->name = $name;
 	}
+
+	 public function getId() {
+		 return $this->id;
+	 }
+
+	 public function setId($id){
+		$this->id = $id;
+	}
 	// </editor-fold>
 
  // <editor-fold defaultstate="collapsed" desc="CRUD">
@@ -40,18 +40,18 @@
 	 public static function create($Task_state){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $id = $mysql->checkVariable($Task_state->getId());
 		 $name = $mysql->checkVariable($Task_state->getName());
+		 $id = $mysql->checkVariable($Task_state->getId());
 		return $mysql->insert(
-				 " INSERT INTO `task_state` (`id`,`name`) VALUES ($id,$name)"
+				 " INSERT INTO `task_state` (`name`,`id`) VALUES ($name,$id)"
 		);
 	}
 
 	 public static function modify($Task_state){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $id = $mysql->checkVariable($Task_state->getId());
 		 $name = $mysql->checkVariable($Task_state->getName());
+		 $id = $mysql->checkVariable($Task_state->getId());
 		 return $mysql->update(
 				"UPDATE `task_state` SET`name`=$name WHERE `id` = $id " 
 		);
@@ -60,8 +60,8 @@
 	public static function delete($Task_state){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $id = $mysql->checkVariable($Task_state->getId());
 		 $name = $mysql->checkVariable($Task_state->getName());
+		 $id = $mysql->checkVariable($Task_state->getId());
 		 return $mysql->delete("DELETE FROM `task_state` WHERE `id` = $id LIMIT 1"
 		);
 	}
@@ -120,8 +120,8 @@
 
 	public function toArray() {
 		return array(
-			'id' => $this->getId(),
-			'name' => $this->getName()
+			'name' => $this->getName(),
+			'id' => $this->getId()
 		 );
 	}
 }

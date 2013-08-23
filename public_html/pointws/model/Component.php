@@ -1,15 +1,15 @@
 <?php 
  class Component {
 
-	 private $id;
-	 private $name;
 	 private $project_id;
+	 private $name;
+	 private $id;
 	 private $parent_id;
 
- function __construct($id, $name, $project_id, $parent_id){
-		 $this->id=$id;
-		 $this->name=$name;
+ function __construct($project_id, $name, $id, $parent_id){
 		 $this->project_id=$project_id;
+		 $this->name=$name;
+		 $this->id=$id;
 		 $this->parent_id=$parent_id;
 	}
  
@@ -17,17 +17,17 @@
 		if(property_exists($object, "Component")){
 			$object = $object->Component;
 		}
-		return new Component ($object->id, $object->name, $object->project_id, $object->parent_id);
+		return new Component ($object->project_id, $object->name, $object->id, $object->parent_id);
 	}
 
 	// <editor-fold defaultstate="collapsed" desc="Get and Set">
 
-	 public function getId() {
-		 return $this->id;
+	 public function getProject_id() {
+		 return $this->project_id;
 	 }
 
-	 public function setId($id){
-		$this->id = $id;
+	 public function setProject_id($project_id){
+		$this->project_id = $project_id;
 	}
 
 	 public function getName() {
@@ -38,12 +38,12 @@
 		$this->name = $name;
 	}
 
-	 public function getProject_id() {
-		 return $this->project_id;
+	 public function getId() {
+		 return $this->id;
 	 }
 
-	 public function setProject_id($project_id){
-		$this->project_id = $project_id;
+	 public function setId($id){
+		$this->id = $id;
 	}
 
 	 public function getParent_id() {
@@ -60,35 +60,35 @@
 	 public static function create($Component){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $id = $mysql->checkVariable($Component->getId());
-		 $name = $mysql->checkVariable($Component->getName());
 		 $project_id = $mysql->checkVariable($Component->getProject_id());
+		 $name = $mysql->checkVariable($Component->getName());
+		 $id = $mysql->checkVariable($Component->getId());
 		 $parent_id = $mysql->checkVariable($Component->getParent_id());
 		return $mysql->insert(
-				 " INSERT INTO `component` (`id`,`name`,`project_id`,`parent_id`) VALUES ($id,$name,$project_id,$parent_id)"
+				 " INSERT INTO `component` (`project_id`,`name`,`id`,`parent_id`) VALUES ($project_id,$name,$id,$parent_id)"
 		);
 	}
 
 	 public static function modify($Component){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $id = $mysql->checkVariable($Component->getId());
-		 $name = $mysql->checkVariable($Component->getName());
 		 $project_id = $mysql->checkVariable($Component->getProject_id());
+		 $name = $mysql->checkVariable($Component->getName());
+		 $id = $mysql->checkVariable($Component->getId());
 		 $parent_id = $mysql->checkVariable($Component->getParent_id());
 		 return $mysql->update(
-				"UPDATE `component` SET`name`=$name,`parent_id`=$parent_id WHERE `id` = $id AND `project_id` = $project_id " 
+				"UPDATE `component` SET`name`=$name,`parent_id`=$parent_id WHERE `project_id` = $project_id AND `id` = $id " 
 		);
 	}
 
 	public static function delete($Component){
 		$mysql = MysqlDBC::getInstance();
 		
-		 $id = $mysql->checkVariable($Component->getId());
-		 $name = $mysql->checkVariable($Component->getName());
 		 $project_id = $mysql->checkVariable($Component->getProject_id());
+		 $name = $mysql->checkVariable($Component->getName());
+		 $id = $mysql->checkVariable($Component->getId());
 		 $parent_id = $mysql->checkVariable($Component->getParent_id());
-		 return $mysql->delete("DELETE FROM `component` WHERE `id` = $id AND `project_id` = $project_id LIMIT 1"
+		 return $mysql->delete("DELETE FROM `component` WHERE `project_id` = $project_id AND `id` = $id LIMIT 1"
 		);
 	}
 
@@ -146,9 +146,9 @@
 
 	public function toArray() {
 		return array(
-			'id' => $this->getId(),
-			'name' => $this->getName(),
 			'project_id' => $this->getProject_id(),
+			'name' => $this->getName(),
+			'id' => $this->getId(),
 			'parent_id' => $this->getParent_id()
 		 );
 	}
