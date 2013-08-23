@@ -84,7 +84,7 @@ function Component (project_id,name,id,parent_id){
 Component.get = function(pages, counts, filter, order, callback) {
 	Component.getCallBack = callback;
 	var params = {command: "get", page: pages, count: counts, filters: JSON.stringify(filter), orderby: JSON.stringify(order)};
-	callService(urlbase + "/ComponentService.php", params, "Component.init", null);
+        callService(urlbase + "/ComponentService.php", params, "Component.init", null);
 };
 Component.init = function(data) {
 	var newValues = new Array();
@@ -378,7 +378,7 @@ Comment.init = function(data) {
 
 // <editor-fold defaultstate="collapsed" desc="callService">
 function callService(urlService, args, callBackFunction, element) {
-	$.ajax({
+    $.ajax({
 		dataType: "jsonp",
 		url: urlService,
 		data: args,

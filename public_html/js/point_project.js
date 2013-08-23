@@ -13,7 +13,7 @@ $(document).ready(function() {
         sprint = Sprints[$(this).val()];
         localStorage.setItem(project.name+'lastSprint',$(this).val());
         Tasks = [];
-        Task.get(0, 0, {"project_id": project.id, "sprint_id": $("#sSprint").val()}, loadTasks);
+        Task.get(0, 0, {"project_id": project.id, "sprint_id": $("#sSprint").val()},[], loadTasks);
     });
 
     // <editor-fold defaultstate="collapsed" desc="Clicks">
@@ -203,7 +203,7 @@ function checkUser() {
         Sprint.get(0, 0, {"project_id": project.id}, [], loadSprints);
         Department.get(0, 0, {}, [], loadDepartments);
         User.get(0, 0, {}, [], loadUsers);
-//        Component.get(0, 0, {"project_id": project.id});
+        Component.get(0, 0, {"project_id": project.id});
         Task_state.get(0, 0, {}, [], loadTask_states);
     }
 }
