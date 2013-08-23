@@ -53,7 +53,7 @@
 		 $id = $mysql->checkVariable($Department->getId());
 		 $name = $mysql->checkVariable($Department->getName());
 		 return $mysql->update(
-				"UPDATE `department` SET`name`=$name WHERE `id` = '$id' " 
+				"UPDATE `department` SET`name`=$name WHERE `id` = $id " 
 		);
 	}
 
@@ -62,11 +62,11 @@
 		
 		 $id = $mysql->checkVariable($Department->getId());
 		 $name = $mysql->checkVariable($Department->getName());
-		 return $mysql->delete("DELETE FROM `department` WHERE `id` = '$id' LIMIT 1"
+		 return $mysql->delete("DELETE FROM `department` WHERE `id` = $id LIMIT 1"
 		);
 	}
 
-	public static function getList($page, $count, $filters) {
+	public static function getList($page, $count, $filters,$orderby) {
 		// <editor-fold defaultstate="collapsed" desc="Limit">
 		$limit = "";
 		if ($count > 0 && $page >= 0) {
@@ -82,14 +82,32 @@
 				$where = " WHERE ";
 				$keys = array_keys($filters);
 				for ($i = 0; $i < count($keys); $i++) {
+				if (preg_match('/' . preg_quote('.*') . '/', $filters[$keys[$i]])) {
+					$filters[$keys[$i]] = str_replace('.*', '%', $filters[$keys[$i]]);
+					$where .= "department." . $keys[$i] . " LIKE '" . $filters[$keys[$i]] . "'";
+				} else {
 					$where .= "department." . $keys[$i] . " = '" . $filters[$keys[$i]] . "'";
+					}
 					if ($i < count($keys) - 1) {
 						$where .= " AND ";
 					}
 				}
 			}
 		}
-		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `department` $where $limit");
+		// </editor-fold>
+		// <editor-fold defaultstate="collapsed" desc="Order By">
+		$ob = '';
+		if (isset($orderby) && count($orderby) > 0) {
+			$ob = " ORDER BY ";
+			for ($i = 0; $i < count($orderby); $i++) {
+				$ob .= $orderby[$i];
+				if ($i < count($orderby) - 1) {
+					$ob .= ", ";
+				}
+			}
+		}
+		// </editor-fold>
+		$result = MysqlDBC::getInstance()->getResult("SELECT * FROM `department` $where $ob $limit");
 		$list = array();
 		while ($row = $result->fetch_object()) {
 			$Entity = Department::get($row);
