@@ -1,12 +1,45 @@
 var buttons;
+var parent;
 $(document).ready(function() {
     checkUser();
+    
+    // <editor-fold defaultstate="collapsed" desc="Events">
+    
+     $("#bNewComponent").click(function() {
+        $("#new_component_panel").modal();
+    });
+
+    $("#bNewComponentPanelCancel").click(function() {
+        $("#new_component_panel").modal('hide');
+    });
+
+    $("#bCreateNewComponent").click(function(){
+        var name = tComponentName.value;
+        if(name!=""){
+            var newComponent = new Component(project.id,name,"null",parent);
+            newComponent.create(addNewComponent);
+        }
+    });
+   // </editor-fold>
+    
 });
+
+function addNewComponent(data){
+    var html = '<div class="btn-group">' +
+            '<button onclick=checkButton(' + data.id + ') class="btn " data-toggle="button">' +
+            '<span class="icon-ok-sign"></span>' +
+            '</button>' +
+            '<button onclick=loadComponents(' + data.id + ') class="btn">' + data.name + '</button>' +
+            '</div>';
+     $("#components").append(html);
+     $("#new_component_panel").modal('hide');
+}
 
 function checkUser() {
     if (localStorage.getItem('user') == undefined) {
         window.top.location.href = 'index.html';
     } else {
+        parent = "null";
         var p = jQuery.parseJSON(localStorage.getItem('project'));
         project = new Project(p.id, p.name);
         Component.get(0,0,{"project_id":project.id},[],loadRoot);
@@ -36,6 +69,7 @@ function checkButton(id){
 }
 
 function loadComponents(id){
+    parent = id;
     $("#ruta").append('<li id=l'+id+' class="active"><span class="divider">/</span>'+Components[id].name+'</li>');
     var html = "";
     
@@ -52,11 +86,3 @@ function loadComponents(id){
     });
     $("#components").html(html);
 }
-
-/*
- * <ul class="breadcrumb">
-                        <li><a href="#">Root</a> <span class="divider">/</span></li>
-                        <li><a href="#">Component 1</a> <span class="divider">/</span></li>
-                        <li class="active">Current Component Name</li>
-                    </ul>
- */

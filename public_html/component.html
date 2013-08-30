@@ -42,7 +42,7 @@
                     <div id="components">
                         
                     </div>
-                    <button class="btn btn-success"><i class="icon-plus icon-white"></i></button>
+                    <button class="btn btn-success" id="bNewComponent"><i class="icon-plus icon-white"></i></button>
                 </div>
             </div><!--/span-->
             <br>
@@ -72,12 +72,30 @@
         <hr>
 
         <footer>
-            <p>&copy; Emerald Digital Entertainment 2013</p>
+            <p> Emerald Digital Entertainment 2013 &copy;</p>
         </footer>
 
+        
+        <div id="new_component_panel" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 id="lNewTask">New Component</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-inline">
+                    <input id="tComponentName" type="text" class="input-xlarge row-fluid" placeholder="Component Name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="bNewComponentPanelCancel" class="btn btn-danger">Cancel</a>
+                <a id="bCreateNewComponent" class="btn btn-primary">Create Component</a>
+            </div>
+        </div>
+        
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.js"></script>
         <script src="js/Point.js"></script>
         <script src="js/point_component.js"></script>
     </body>
+    
 </html>
