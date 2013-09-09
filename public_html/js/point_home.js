@@ -7,9 +7,41 @@ $(document).ready(function() {
             });
         });
     });
-    $("#lLogOut").click(function(){
+    $("#lLogOut").click(function() {
         localStorage.clear();
         window.top.location.href = 'index.html';
+    });
+    $("#bCreateProject").click(function() {
+        $("#new_project_panel").modal();
+    });
+    $("#bNewProjectPanelCancel").click(function() {
+        $("#new_project_panel").modal('hide');
+    });
+    $("#bCreateNewProject").click(function() {
+        var name = tProjectName.value;
+        if (name != "") {
+            var newProject = new Project("null", name);
+            newProject.create(function(data) {
+                var orderby = [];
+                Project.get(0, 0, {}, orderby, function getFinished(data) {
+                    var table = new Array();
+                    var args = new Array();
+                    var i = 0;
+                    table[0] = "#";
+                    table[1] = "Name";
+                    data.forEach(function(element) {
+                        args[i] = new Array();
+                        args[i][0] = element.id;
+                        args[i][1] = element.id;
+                        args[i][2] = element.name;
+                        i++;
+                    });
+                    var h = generateTable(table, args);
+                    document.getElementById("tableProyects").innerHTML = h;
+                });
+                $("#new_project_panel").modal('hide');
+            });
+        }
     });
 });
 
@@ -17,7 +49,6 @@ var user;
 window.onload = checkUser();
 
 function checkUser() {
-    console.log(localStorage.getItem('user'))
     if (localStorage.getItem('user') == undefined) {
         window.top.location.href = 'index.html';
     } else {
@@ -77,6 +108,7 @@ function checkUser() {
     }
 }
 
-
-
-
+    
+function loadProjects(data){
+   
+}

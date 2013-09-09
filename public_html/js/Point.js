@@ -62,7 +62,7 @@ function Component (project_id,name,id,parent_id){
 	this.id = id;
 	this.parent_id = parent_id;
 	this.create = function(callback) {
-	this.createCallBack = callback;
+                this.createCallBack = callback;
 		var params = {command: "create", Component: JSON.stringify(this)};
 		callService(urlbase + "/ComponentService.php", params, "register", this);
 	};

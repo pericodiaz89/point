@@ -45,6 +45,7 @@
 
                 </table>
             </div>
+            <p><button id="bCreateProject" class="btn-success row-fluid ">Create New Project</button></p>
             <div class="jumbotron">
                 <h3>Task List</h3>
                 <table id="tableTasks" class="table table-hover table-bordered success">
@@ -60,6 +61,22 @@
 
         </div> <!-- /container -->
 
+          <div id="new_project_panel" class="modal hide fade">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 id="lNewTask">New Project</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-inline">
+                    <input id="tProjectName" type="text" class="input-xlarge row-fluid" placeholder="Project Name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="bNewProjectPanelCancel" class="btn btn-danger">Cancel</a>
+                <a id="bCreateNewProject" class="btn btn-primary">Create Project</a>
+            </div>
+        </div>
+        
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.js"></script>
         <script src="js/Point.js"></script>
