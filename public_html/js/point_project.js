@@ -81,7 +81,6 @@ $(document).ready(function() {
         }
         Tasks[updateTask].state_id = $("#sStatusUpdate").val();
         Tasks[updateTask].user_id = $("#sUserUpdate").val();
-        Tasks[updateTask].component_id = "null";
         Tasks[updateTask].update("updatecheck");
     });
 
@@ -185,6 +184,9 @@ function refreshTable() {
     if ($("#sUser").val() != "null") {
         filter["user_id"] = $("#sUser").val();
     }
+    if ($("#sComponent").val() != "null") {
+        filter["component_id"] = $("#sComponent").val();
+    }
     Task.get(0, 0, filter, ["id DESC"], loadTasks);
 }
 
@@ -203,7 +205,7 @@ function checkUser() {
         Sprint.get(0, 0, {"project_id": project.id}, [], loadSprints);
         Department.get(0, 0, {}, [], loadDepartments);
         User.get(0, 0, {}, [], loadUsers);
-        Component.get(0, 0, {"project_id": project.id});
+        Component.get(0, 0, {"project_id": project.id}, [], loadComponents);
         Task_state.get(0, 0, {}, [], loadTask_states);
     }
 }
@@ -253,6 +255,16 @@ function loadDepartments(data) {
     $("#sSetDepartment").html(htmlDepartments);
 }
 
+function loadComponents(data) {
+    var htmlDepartments = "";
+    data.forEach(function(element) {
+        htmlDepartments += "<option value=\"" + element.id + "\">" + element.name + " </option>";
+    });
+
+    $("#sComponent").html("<option value=\"null\"> All </option>" + htmlDepartments);
+    $("#sSetComponent").html("<option value=\"null\">N/A</option>" + htmlDepartments);
+}
+
 function loadTasks(data) {
     var table = new Array();
     var args = new Array();
@@ -300,11 +312,11 @@ function loadSpec(id) {
     $("#task_panel").modal();
     $("#lInfoName").html("#" + id + " " + $("#Name" + id).html());
     $("#lLinfoDep").html($("#Department" + id).html());
+    $("#lLInfoComp").html($("#Component" + id).html());
     $("#sUserUpdate").val(T.user_id).attr('selected', true);
     $("#sStatusUpdate").val(T.state_id).attr('selected', true);
     $("#tTaskDescription_taskpanel").text(T.description);
     $("#optionsRadios" + $("#Points" + id).html()).click();
-
 
     updateTask = id;
     Comment.get(0, 0, {'task_id': id}, [], setComments);
