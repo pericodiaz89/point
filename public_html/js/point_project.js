@@ -81,6 +81,10 @@ $(document).ready(function() {
         }
         Tasks[updateTask].state_id = $("#sStatusUpdate").val();
         Tasks[updateTask].user_id = $("#sUserUpdate").val();
+        if (Tasks[updateTask].component_id == null) {
+            Tasks[updateTask].component_id = "null";
+        }
+        console.log(Tasks[updateTask]);
         Tasks[updateTask].update("updatecheck");
     });
 
@@ -94,6 +98,7 @@ $(document).ready(function() {
         $("#sSetDepartment").val(T.department_id).attr('selected', true);
         $("#sSetUser").val(T.user_id).attr('selected', true);
         $("#sSetStatus").val(T.state_id).attr('selected', true);
+        $("#sSetComponent").val(T.component_id).attr('selected', true);
         //$("#sSetStatus").val(T.state_id).attr('selected', true); TODO Component
         $("#rbOptionNewTask" + $("#Points" + T.id).html()).click();
 
@@ -143,7 +148,8 @@ $(document).ready(function() {
         var SprintVal = sprint.options[sprint.selectedIndex].value;
 
         if (isCreatingTask) {
-            var newTask = new Task(userVal, "null", SprintVal, compVal, points, project.id, depVal, name, desc, statusVal);
+            var newTask = new Task(project.id, 'null', name, desc, points, userVal, depVal, compVal, SprintVal, statusVal, '');
+            //var newTask = new Task(userVal, "null", SprintVal, compVal, points, project.id, depVal, name, desc, statusVal, '');
             newTask.create(function(objetoNuevo) {
                 $("#new_task_panel").modal('hide');
                 loadTasks(Tasks);
@@ -156,7 +162,7 @@ $(document).ready(function() {
             T.points = points;
             T.state_id = statusVal;
             T.user_id = userVal;
-            T.component_id = "null";
+            T.component_id = compVal;
             T.update("updatecheck");
         }
     });
