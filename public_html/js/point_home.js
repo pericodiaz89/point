@@ -53,7 +53,7 @@ function checkUser() {
         window.top.location.href = 'index.html';
     } else {
         var u = jQuery.parseJSON(localStorage.getItem('user'));
-        user = new User(u.id, u.name, u.password, u.username, u.email);
+        user = new User(u.id, u.username, u.password, u.name, u.email);
         document.getElementById("lUsername").innerHTML = user.name;
         var orderby = [];
 
@@ -108,7 +108,7 @@ function checkUser() {
     }
 }
 
-    
+
 function loadProjects(data){
-   
+
 }

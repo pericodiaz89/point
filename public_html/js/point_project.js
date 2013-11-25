@@ -34,7 +34,7 @@ $(document).ready(function() {
     });
     $("#createSprint").click(function() {
         $("#new_sprint_panel").modal('hide');
-        var nSprint = new Sprint(project.id, tSprintDescription.value, tSprintName.value, "null", tSprintDate.value);
+        var nSprint = new Sprint("null", tSprintName.value, tSprintDate.value, tSprintDescription.value, project.id);
         nSprint.create(function(sprint) {
             $("#sSprint").append('<option value="' + sprint.id + '">' + sprint.name + '</option>');
             $("#sSprintChange").append('<option value="' + sprint.id + '">' + sprint.name + '</option>');
@@ -44,7 +44,7 @@ $(document).ready(function() {
     $("#bNewComment").click(function() {
         $("#bNewComment").button('loading');
         var comment = tNewComment.value;
-        var c = new Comment(comment, updateTask, 0, getTimeStamp(), user.id);
+        var c = new Comment(0, comment, getTimeStamp(), updateTask, user.id);
         c.create(function(data) {
             addComments(data);
         });
@@ -201,7 +201,7 @@ function checkUser() {
         window.top.location.href = 'index.html';
     } else {
         var u = jQuery.parseJSON(localStorage.getItem('user'));
-        user = new User(u.id, u.name, u.password, u.username, u.email);
+        user = new User(u.id, u.username, u.password, u.name, u.email);
         var p = jQuery.parseJSON(localStorage.getItem('project'));
         project = new Project(p.id, p.name);
         document.getElementById("lUsername").innerHTML = user.name;

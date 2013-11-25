@@ -155,7 +155,7 @@ function checkUser() {
         window.top.location.href = 'index.html';
     } else {
         var u = jQuery.parseJSON(localStorage.getItem('user'));
-        user = new User(u.id, u.name, u.password, u.username, u.email);
+        user = new User(u.id, u.username, u.password, u.name, u.email);
         var p = jQuery.parseJSON(localStorage.getItem('project'));
         project = new Project(p.id, p.name);
         document.getElementById("lUsername").innerHTML = user.name;

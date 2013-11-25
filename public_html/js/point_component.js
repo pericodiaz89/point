@@ -2,9 +2,9 @@ var buttons;
 var parent;
 $(document).ready(function() {
     checkUser();
-    
+
     // <editor-fold defaultstate="collapsed" desc="Events">
-    
+
      $("#bNewComponent").click(function() {
         $("#new_component_panel").modal();
     });
@@ -16,12 +16,12 @@ $(document).ready(function() {
     $("#bCreateNewComponent").click(function(){
         var name = tComponentName.value;
         if(name!=""){
-            var newComponent = new Component(project.id,name,"null",parent);
+            var newComponent = new Component("null", name, project.id, parent);
             newComponent.create(addNewComponent);
         }
     });
    // </editor-fold>
-    
+
 });
 
 function addNewComponent(data){
@@ -72,7 +72,7 @@ function loadComponents(id){
     parent = id;
     $("#ruta").append('<li id=l'+id+' class="active"><span class="divider">/</span>'+Components[id].name+'</li>');
     var html = "";
-    
+
     Components.forEach(function(element){
         if(element.parent_id == id){
             buttons[element.id] = false;
